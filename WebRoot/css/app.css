@@ -1,0 +1,747 @@
+@CHARSET "utf-8";
+/*项目框架logo version css定义*/
+
+.x-panel-body-default {
+    font-weight: 400
+}
+
+.app_logo {
+    height: 45px;
+    float: left;
+}
+
+.app_logo img {
+    height: 45px;
+}
+
+.add_logo_name {
+    height: 50px;
+    float: left;
+    line-height: 45px;
+    font-size: 20px;
+}
+
+.app_version {
+    margin-top: 5px;
+    /**font-weight: bold;**/
+    font-size: 12px;
+    float: left;
+    margin-left: 14px;
+    color: #333333;
+    vertical-align: center;
+}
+
+.app_time {
+    float: right;
+    color: white;
+    margin: -8px 10px 0 0;
+}
+
+.app_thumb {
+    width: 80px;
+    height: 80px;
+}
+
+.app_thumb div img {
+    width: 32px;
+    height: 32px;
+    margin-left: 16px;
+}
+
+.app_small_img {
+    float: left;
+    text-indent: 4px;
+    height: 20px;
+    line-height: 22px;
+}
+
+.app_small_img img {
+    width: 20px;
+    height: 20px;
+    float: left;
+}
+
+.app_medinu_show {
+    width: 22px;
+    height: 22px;
+    margin-left: 9px;
+}
+
+/*End Width 项目框架logo version css定义*/
+.text_notice {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/*项目图标定义*/
+.app_logout {
+    background-image: url(../images/login/quit.png) !important;
+}
+
+.switch_user {
+    background-image: url(../images/login/switch.png) !important;
+}
+
+.gjsearch {
+    background-image: url(../images/icons/search.png) !important;
+}
+
+.search {
+    background-image: url(../images/app/search.png) !important;
+}
+
+.add {
+    background-image: url(../images/app/add.png) !important;
+}
+
+.add2 {
+    background-image: url(../images/icons/add.png) !important;
+}
+
+.delete {
+    background-image: url(../images/app/delete.png) !important;
+}
+
+.export {
+    background-image: url(../images/app/logout.png) !important;
+}
+
+.confirm {
+    background-image: url(../images/icons/shtg.png) !important;
+}
+
+.savewhite {
+    background-image: url(../images/icons/savewhite.png) !important;
+}
+
+.auditPass {
+    background-image: url(../images/icons/shtg.png) !important;
+}
+
+.auditUnPass {
+    background-image: url(../images/icons/shfj.png) !important;
+}
+
+.save {
+    background-image: url(../images/icons/save.png) !important;
+}
+
+.confirm1 {
+    background-image: url(../images/app/confirm1.png) !important;
+}
+
+.copynext {
+    background-image: url(../images/icons/copynext.png) !important;
+}
+
+.apply {
+    background-image: url(../images/icons/apply.png) !important;
+}
+
+.show {
+    background-image: url(../images/app/show.png) !important;
+}
+
+.edit {
+    background-image: url(../images/app/edit.png) !important;
+}
+
+.configSet {
+    background-image: url(../images/icons/set.png) !important;
+}
+
+.undo {
+    background-image: url(../images/app/undo.png) !important;
+}
+
+.clear {
+    background-image: url(../images/icons/clear.png) !important;
+}
+
+.cancel {
+    background-image: url(../images/app/cancel_.png) !important;
+}
+
+.getCode {
+    background-image: url(../images/app/code.png) !important;
+}
+
+.getQrCode {
+    background-image: url(../images/app/qr_code.png) !important;
+}
+
+.hfgxqy {
+    background-image: url(../images/icons/pats.png) !important;
+}
+
+.xxzbtj {
+    background-image: url(../images/menu/ztpm.png) !important;
+}
+
+.down {
+    background-image: url(../images/app/logout.png) !important;
+}
+
+.close_all {
+    background-image: url(../images/app/tab_close_all.png) !important;
+}
+
+.close_this {
+    background-image: url(../images/app/tab_close_this.png) !important;
+}
+
+.close_other {
+    background-image: url(../images/app/tab_close_other.png) !important;
+}
+
+.fullscreen {
+    background-image: url(../images/app/fullscreen.png) !important;
+}
+
+.fullscreen_exit {
+    background-image: url(../images/app/fullscreen_exit.png) !important;
+}
+
+.statis {
+    background-image: url(../images/icons/statis.png) !important;
+}
+
+/*End width 项目图标定义*/
+
+.no_overflow {
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.msg .x-box-mc {
+    font-size: 14px;
+}
+
+#msg-div {
+    position: absolute;
+    right: 2px;
+    text-align: center;
+    bottom: 24px;
+    margin: 0  auto;
+    z-index: 20000;
+}
+
+#msg-div .msg {
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    background: #157fcb;
+    border: 2px solid #ccc;
+    margin-top: 2px;
+    padding: 10px 15px;
+    color: #e9fdf7;
+}
+
+#msg-div .msg h3 {
+    margin: 0 0 8px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#msg-div .msg p {
+    margin: 0;
+}
+
+.navbg {
+    background: url(../images/main/navbg01.png) no-repeat #4B9DD8;
+    height: 52px;
+}
+
+.export {
+    background-image: url(../images/app/logout.png) !important;
+}
+
+.excel {
+    background-image: url(../images/app/excel.png) !important;
+}
+
+.gqtb {
+    background-image: url(../images/icons/second1.png) !important;
+}
+
+.sfjl {
+    background-image: url(../images/icons/call.png) !important;
+}
+
+.print {
+    background-image: url(../images/icons/printer.gif) !important;
+    background-color: white;
+}
+
+.yi {
+    background-image: url(../images/icons/yi.png) !important;
+}
+
+.wei {
+    background-image: url(../images/icons/wei.png) !important;
+}
+
+.quxiao {
+    background-image: url(../images/icons/qu.png) !important;
+}
+
+.shangwei {
+    background-image: url(../images/icons/weishen.png) !important;
+}
+
+.dai {
+    background-image: url(../images/icons/dai.png) !important;
+}
+
+.undo1 {
+    background-image: url(../images/app/undo1.png) !important;
+}
+
+.record {
+    background-image: url(../images/icons/record.png) !important;
+}
+
+.up {
+    background-image: url(../images/icons/up.gif) !important;
+}
+
+.download {
+    background-image: url(../images/icons/download.png) !important;
+}
+
+.allocation {
+    background-image: url(../images/app/allocation.png) !important;
+}
+
+.pass {
+    background-image: url(../images/icons/pass.png) !important;
+}
+
+.unpass {
+    background-image: url(../images/icons/x.png) !important;
+}
+
+.preview {
+    background-image: url(../images/icons/preview.png) !important;
+}
+
+.audit {
+    background-image: url(../images/icons/audit.png) !important;
+}
+
+.depstandardaudit {
+    background-image: url(../images/icons/pj.png) !important;
+}
+
+.resstandardaudit {
+    background-image: url(../images/icons/pj.png) !important;
+}
+
+.leadstandardaudit {
+    background-image: url(../images/icons/pj.png) !important;
+}
+
+.standardaudit {
+    background-image: url(../images/icons/pj.png) !important;
+}
+
+.x-grid-record-red {
+    font-weight: bold;
+}
+
+.dispat {
+    width: 22px;
+    height: 18px;
+    float: left;
+    cursor: pointer;
+    background: url(../images/icons/dis_pat.png) no-repeat;
+}
+
+.x-btn .x-unselectable .x-box-item .x-toolbar-item .x-btn-default-toolbar-small
+.topnav .x-btn-inner-default-toolbar-small {
+    color: #70655c;
+    font-family: 微软雅黑;
+    font-size: 13px;
+}
+
+.topnav .x-btn-icon-el-default-toolbar-small {
+    height: 28px;
+}
+
+.topnav .x-nbr .x-btn-default-toolbar-small {
+    background: none;
+}
+
+.topnav .x-btn-over .x-btn-default-toolbar-small-ml, .topnav .x-btn-default-toolbar-small-ml, .topnav .x-btn-over .x-btn-default-toolbar-small-bl,
+.topnav .x-btn-default-toolbar-small-mc, .topnav .x-btn-default-toolbar-small-bl, .topnav .x-btn-over .x-btn-default-toolbar-small-tc, .topnav .x-btn-default-toolbar-small-tc,
+.topnav .x-btn-default-toolbar-small-ml, .topnav .x-btn-default-toolbar-small-br, .topnav .x-btn-default-toolbar-small-mr,
+.topnav .x-btn-default-toolbar-small-bc, .topnav .x-btn-over .x-btn-default-toolbar-small-tr, .topnav .x-btn-default-toolbar-small-tr, .topnav .x-btn-over .x-btn-default-toolbar-small-tl,
+.topnav .x-btn-default-toolbar-small-tl, .topnav .x-btn-arrow-right.x-btn-wrap-default-toolbar-small:after {
+    background: none;
+    border: none;
+}
+
+.topnav {
+    padding: 3px;
+    background: #fff;
+}
+
+.topnav a.x-btn.x-unselectable {
+    background: url("../images/menu/down.png") no-repeat right center #f5f5f5;
+    background: url("../images/menu/topnav03.png") no-repeat center center \0;
+    border: none;
+    margin-left: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0 3px;
+}
+
+.topnav .x-btn-over.x-btn-default-toolbar-small {
+    background: url("../images/menu/down.png") no-repeat right center #E1E1E1;
+}
+
+.x-window-header-default-top-mc {
+    background-color: #e6e6e6
+}
+
+.x-toolbar-footer {
+    background-color: #f5f5f5;
+}
+
+#gzjj111111111 {
+    line-height: 200%;
+}
+
+#desciptionJianjie {
+    line-height: 150%;
+    padding-left: 10px;
+}
+
+#changeClass img {
+    margin: 5px 0 0 40px;
+    background-color: #4B9DD8;
+}
+
+.logoh1 {
+    font-size: 20px;
+    color: #ffffff;
+    position: absolute;
+    top: 16px;
+    left: 90px;
+    width: 400px;
+}
+
+.timecount {
+    width: 500px;
+    height: 90px;
+    background: url(../images/main/timebg.png) no-repeat;
+    font-weight: 700;
+    padding: 0px 10px 0 10px;
+}
+
+.timecountb {
+    margin-top: 0px;
+    font-size: 14px;
+}
+
+.timecount b {
+    font-size: 24px;
+    color: #7db8e3;
+    font-weight: 500;
+    margin: 0 3px;
+}
+
+.count {
+    line-height: 120px;
+    display: inline-table;
+}
+
+.count i {
+    width: 56px;
+    height: 78px;
+    display: inline-block;
+    background: url(../images/main/timeday.png) no-repeat top center;
+    font-family: tahoma;
+    font-style: normal;
+    font-size: 50px;
+    line-height: 65px;
+    text-align: center;
+    color: #7db8e3;
+}
+
+.task, .leftblock2, .leftblock3 {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    width: 500px;
+    height: 246px;
+    margin-top: 10px;
+}
+
+.task h2, .leftblock2 h2, .leftblock3 h2 {
+    height: 32px;
+    line-height: 30px;
+    background: #F3F3F3;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #ddd;
+    border-radius: 3px 3px 0 0;
+    font-size: 12px;
+    text-indent: 10px;
+}
+
+.task h2 img, .leftblock2 h2 img, .leftblock3 h2 img {
+    vertical-align: -3px;
+    margin-right: 5px;
+}
+
+.sicon {
+    float: right;
+}
+
+.sicon li {
+    float: left;
+    width: 36px;
+    margin-top: -8px
+}
+
+.sicon li a:hover {
+    opacity: 0.7
+}
+
+.mainbody {
+    width: 1010px;
+    margin: 5px auto;
+    border: none;
+}
+
+.mainbody a:hover {
+    color: #f60;
+}
+
+.leftblock1, .leftblock3 {
+    float: left;
+    height: 346px;
+    width: 500px;
+}
+
+.morea {
+    float: right;
+}
+
+.loadfile, .mainbody table {
+    width: 100%;
+    font-size: 12px;
+}
+
+.loadfile td, .mainbody td {
+    height: 22px;
+    line-height: 22px;
+    padding: 4px;
+}
+
+.loadfile tr:nth-of-type(even), .mainbody tr:nth-of-type(even) {
+    background: #F6F6F6
+}
+
+.loadfile tr:hover {
+    background: #EDF7FC;
+    cursor: pointer;
+}
+
+.leftblock2 {
+    float: right;
+    margin-top: 0;
+    height: 346px;
+}
+
+.leftblock3 {
+    height: 243px;
+    margin-top: 10px;
+}
+
+.leftblock4 {
+    float: right;
+}
+
+.leftblock2 th, .leftblock3 th {
+    -ms-filter: alpha(opacity=100 finishopacity=50 style=1 startx=0, starty=0, finishx=0, finishy=150) progid:DXImageTransform.Microsoft.gradient(startcolorstr=#ECECEC, endcolorstr=#E2E2E0, gradientType=0); /*IE8*/
+    background: url(../images/main/littleh13.png) repeat-x; /* 一些不支持背景渐变的浏览器 */
+    background: -moz-linear-gradient(top, #ECECEC, #E2E2E0);
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#ECECEC), to(#E2E2E0));
+    background: -o-linear-gradient(top, #ECECEC, #E2E2E0);
+    height: 24px;
+    border-right: 1px solid #ddd;
+}
+
+.news td, .bottomtab td {
+    text-align: center;
+    border-right: 1px solid #ddd;
+}
+
+.news td:last-of-type, .leftblock2 th:last-of-type, .bottomtab td:last-of-type, .leftblock3 th:last-of-type {
+    border-right: none
+}
+
+.bottomtab tr:last-of-type {
+    border-bottom: none
+}
+
+td.lefttext {
+    text-align: left;
+    width: 310px;
+    height: 30px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.news tr, .bottomtab tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.mainbody td img:hover {
+    opacity: 0.7;
+}
+
+.m3 {
+    margin-left: 3px;
+}
+
+.tab-bd {
+    height: 273px;
+}
+
+.tab-bd .news {
+    display: none;
+}
+
+.tab-bd .onclass.news {
+    display: inline-table;
+}
+
+.tab-hd li {
+    float: left;
+    width: 124px;
+    text-align: center;
+    cursor: pointer;
+    line-height: 39px;
+    font-size: 12px;
+}
+
+.tab-hd li img {
+    vertical-align: middle;
+    margin-right: 3px;
+}
+
+.tab-hd li.active {
+    background: #e7e7e7;
+    -webkit-box-shadow: inset 0 10px 8px -10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: inset 0 10px 8px -10px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 10px 8px -10px rgba(0, 0, 0, 0.5)
+}
+
+.tab-hd li:last-of-type {
+    width: 126px;
+}
+
+.tabdiv .tabdivnone {
+    display: none;
+}
+
+.tabdiv .onli.tabdivnone {
+    display: inline-table;
+}
+
+.nonetask td {
+    font-size: 16px;
+    color: #bbb;
+}
+
+.bottomtab td:first-of-type {
+    font-weight: 700;
+    font-size: 12px;
+    color: #444;
+}
+
+.mainbody tr.selecttask {
+    /*background: url(../images/main/littleh14.png) no-repeat left center;*/
+}
+
+.selecttask a {
+    font-weight: 700;
+}
+
+.moreul {
+    display: inline-block;
+    width: 60px;
+    float: right;
+    height: 26px;
+    margin: 2px 20px 0 0;
+    background: url(../images/main/tabshift07.png) no-repeat;
+}
+
+.moreul li {
+    display: inline-block;
+    width: 30px;
+    height: 26px;
+    float: left;
+}
+
+.leftblock3 h2 .moreul img {
+    vertical-align: 0px;
+    margin-left: -2px;
+}
+
+.liactive.lefttab {
+    background: url(../images/main/tabshift10.png) no-repeat;
+}
+
+.liactive.righttab {
+    background: url(../images/main/tabshift09.png) no-repeat;
+}
+
+/*新图标*/
+
+.x-tree-icon-parent {
+    background: url("../images/sysicons/folder.png") no-repeat center !important;
+    width: 20px;
+}
+
+.x-tree-icon-parent-expanded {
+    background: url("../images/sysicons/folder-open.png") no-repeat center !important;
+    width: 20px;
+}
+
+.x-tree-icon-leaf {
+    background: url("../images/sysicons/leaf.png") no-repeat center !important;
+    width: 20px;
+}
+
+.x-grid-with-col-lines .x-grid-cell {
+    line-height: 160%;
+}
+
+/**
+加粗Grid表头
+ */
+.x-column-header-text-inner {
+    font-weight: bold;
+}
+
+.x-grid-back-note {
+    background: #22608B;
+}
+
+.x-form-item-label-default {
+    font: 400 14px/18px helvetica, arial, verdana, sans-serif;
+    color: #000;
+    /*min-height: 25px;*/
+    /*padding: 9px 2px;*/
+}
+
+/*.x-form-text-default {
+    color: rgba(0, 0, 0, 0.7);
+    padding: 9px 6px;
+    background-color: #fff;
+    font: 400 14px/18px helvetica, arial, verdana, sans-serif;
+    !*min-height: 28px;*!
+}*/

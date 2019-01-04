@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.creating.dao.mapper.dictionary.DictionaryTypeDao">
+
+	<select id="selectDictionaryType" parameterType="com.creating.dao.mapper.entity.dictionary.DictionaryType"
+	        resultType="com.creating.dao.mapper.entity.dictionary.DictionaryType">
+		select t.*,1 leaf from M_DICTIONARY_TYPE t
+		<where>
+			<if test="text!=null and text!=''">and (text like '%${text}%' or code like '%${text}%')</if>
+			<if test="fid!=null and fid!=''">and fid = #{fid}</if>
+		</where>
+	</select>
+
+
+	<insert id="insertDictionaryType" parameterType="com.creating.dao.mapper.entity.dictionary.DictionaryType">
+		INSERT INTO M_DICTIONARY_TYPE
+		(
+			code,
+			text,
+			status
+
+		)
+		VALUES (
+			#{code ,jdbcType=VARCHAR},
+			#{text ,jdbcType=VARCHAR},
+			#{status ,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="updateDictionaryType">
+		update M_DICTIONARY_TYPE
+		<set>
+			code = #{code ,jdbcType=VARCHAR},
+			text = #{text ,jdbcType=VARCHAR},
+			status = #{status ,jdbcType=VARCHAR}
+		</set>
+		<where>
+			fid = #{fid}
+		</where>
+	</update>
+
+
+	<delete id="deleteDictionaryType">
+		delete from M_DICTIONARY_TYPE
+		<where>
+			fid = #{fid}
+		</where>
+	</delete>
+</mapper>

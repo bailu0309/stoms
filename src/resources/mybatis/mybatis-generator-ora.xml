@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+		"-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+		"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+	<classPathEntry location="E:\maven_repository\com\oracle\ojdbc14\10.2.0.4.0\ojdbc14-10.2.0.4.0.jar"/>
+
+	<context id="context" targetRuntime="MyBatis3">
+		<commentGenerator>
+			<!--不生成注释-->
+			<property name="suppressAllComments" value="true"/>
+			<property name="suppressDate" value="true"/>
+		</commentGenerator>
+
+		<jdbcConnection userId="CRT" password="CRT" driverClass="oracle.jdbc.driver.OracleDriver"
+		                connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:MBL"/>
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false"/>
+		</javaTypeResolver>
+
+		<javaModelGenerator targetPackage="com.creating.dao.mapper.entity" targetProject=".">
+			<property name="enableSubPackages" value="false"/>
+			<property name="trimStrings" value="true"/>
+		</javaModelGenerator>
+
+		<sqlMapGenerator targetPackage="com.creating.dao.mapper.dataupload" targetProject=".">
+			<property name="enableSubPackages" value="false"/>
+		</sqlMapGenerator>
+
+		<javaClientGenerator targetPackage="com.creating.dao.mapper.dataupload" type="XMLMAPPER" targetProject=".">
+			<property name="enableSubPackages" value="false"/>
+		</javaClientGenerator>
+<!--
+
+		<sqlMapGenerator targetPackage="com.creating.dao.mapper.adverseevent" targetProject=".">
+			<property name="enableSubPackages" value="false"/>
+		</sqlMapGenerator>
+
+		<javaClientGenerator targetPackage="com.creating.dao.mapper.adverseevent" type="XMLMAPPER" targetProject=".">
+			<property name="enableSubPackages" value="false"/>
+		</javaClientGenerator>
+-->
+
+		<!--		<table schema="nqc" tableName="T_ADVERSE" domainObjectName="adverseevent.AdverseBase"
+					   enableInsert="true"
+					   enableSelectByPrimaryKey="true"
+					   enableUpdateByPrimaryKey="true"
+					   enableDeleteByPrimaryKey="true"
+					   enableCountByExample="false"
+					   enableDeleteByExample="false"
+					   enableSelectByExample="false"
+					   enableUpdateByExample="false"/>
+
+				<table schema="nqc" tableName="T_ACCIDENT" domainObjectName="adverseevent.AdverseAccident"
+					   enableInsert="true"
+					   enableSelectByPrimaryKey="true"
+					   enableUpdateByPrimaryKey="true"
+					   enableDeleteByPrimaryKey="true"
+					   enableCountByExample="false"
+					   enableDeleteByExample="false"
+					   enableSelectByExample="false"
+					   enableUpdateByExample="false"/>
+
+				<table schema="nqc" tableName="t_pressores" domainObjectName="adverseevent.AdversePressores"
+					   enableInsert="true"
+					   enableSelectByPrimaryKey="true"
+					   enableUpdateByPrimaryKey="true"
+					   enableDeleteByPrimaryKey="true"
+					   enableCountByExample="false"
+					   enableDeleteByExample="false"
+					   enableSelectByExample="false"
+					   enableUpdateByExample="false"/>
+		<table schema="nqc" tableName="t_falldownbed" domainObjectName="adverseevent.AdverseFalldown"
+		       enableInsert="true"
+		       enableSelectByPrimaryKey="true"
+		       enableUpdateByPrimaryKey="true"
+		       enableDeleteByPrimaryKey="true"
+		       enableCountByExample="false"
+		       enableDeleteByExample="false"
+		       enableSelectByExample="false"
+		       enableUpdateByExample="false"/>
+
+
+		<table schema="nqc" tableName="t_npext" domainObjectName="adverseevent.AdverseNpext"
+		       enableInsert="true"
+		       enableSelectByPrimaryKey="true"
+		       enableUpdateByPrimaryKey="true"
+		       enableDeleteByPrimaryKey="true"
+		       enableCountByExample="false"
+		       enableDeleteByExample="false"
+		       enableSelectByExample="false"
+		       enableUpdateByExample="false"/>
+		<table schema="nqc" tableName="T_DRUGWRONG" domainObjectName="adverseevent.AdverseDrugwrong"
+		       enableInsert="true"
+		       enableSelectByPrimaryKey="true"
+		       enableUpdateByPrimaryKey="true"
+		       enableDeleteByPrimaryKey="true"
+		       enableCountByExample="false"
+		       enableDeleteByExample="false"
+		       enableSelectByExample="false"
+		       enableUpdateByExample="false"/>
+		       		       -->
+
+		<table schema="crt" tableName="djps_dpzc_result" domainObjectName="dataupload.CatalogResultValue"
+		       enableInsert="true"
+		       enableSelectByPrimaryKey="true"
+		       enableUpdateByPrimaryKey="true"
+		       enableDeleteByPrimaryKey="true"
+		       enableCountByExample="false"
+		       enableDeleteByExample="false"
+		       enableSelectByExample="false"
+		       enableUpdateByExample="false"/>
+	</context>
+</generatorConfiguration>

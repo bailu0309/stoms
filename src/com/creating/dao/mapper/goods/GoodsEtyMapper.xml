@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.creating.dao.mapper.goods.GoodsEtyMapper">
+	<resultMap id="BaseResultMap" type="com.creating.dao.mapper.entity.goods.GoodsEty">
+		<id column="id" jdbcType="INTEGER" property="id"/>
+		<result column="name" jdbcType="VARCHAR" property="name"/>
+		<result column="brand" jdbcType="VARCHAR" property="brand"/>
+		<result column="model" jdbcType="VARCHAR" property="model"/>
+		<result column="counts" jdbcType="REAL" property="counts"/>
+		<result column="unit" jdbcType="VARCHAR" property="unit"/>
+		<result column="type" jdbcType="VARCHAR" property="type"/>
+		<result column="supplier" jdbcType="VARCHAR" property="supplier"/>
+		<result column="remark" jdbcType="VARCHAR" property="remark"/>
+		<result column="post1" jdbcType="VARCHAR" property="post1"/>
+		<result column="num1" jdbcType="REAL" property="num1"/>
+		<result column="post2" jdbcType="VARCHAR" property="post2"/>
+		<result column="num2" jdbcType="REAL" property="num2"/>
+		<result column="post3" jdbcType="VARCHAR" property="post3"/>
+		<result column="num3" jdbcType="REAL" property="num3"/>
+		<result column="post4" jdbcType="VARCHAR" property="post4"/>
+		<result column="num4" jdbcType="REAL" property="num4"/>
+		<result column="post5" jdbcType="VARCHAR" property="post5"/>
+		<result column="num5" jdbcType="REAL" property="num5"/>
+		<result column="num6" jdbcType="REAL" property="num6"/>
+		<result column="num7" jdbcType="REAL" property="num7"/>
+		<result column="num8" jdbcType="REAL" property="num8"/>
+		<result column="num9" jdbcType="REAL" property="num9"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, brand, model, counts, unit, type, supplier, remark, post1, num1, post2,
+		num2, post3, num3, post4, num4, post5, num5, num6, num7, num8, num9
+	</sql>
+	<select id="queryGoods" parameterType="com.creating.dao.mapper.entity.goods.GoodsEty"
+	        resultType="com.creating.dao.mapper.entity.goods.GoodsEty">
+		select
+		<include refid="Base_Column_List"/>
+		from t_goods
+		<where>
+			<if test="name != null and name != ''">name like '%${name}%'</if>
+			<if test="brand != null and brand != ''">brand like '%${brand}%'</if>
+		</where>
+	</select>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from t_goods
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		DELETE FROM t_goods
+		WHERE id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.creating.dao.mapper.entity.goods.GoodsEty">
+		INSERT INTO t_goods (id, name, brand,
+		                     model, counts, unit, type,
+		                     supplier, remark, post1,
+		                     num1, post2, num2, post3,
+		                     num3, post4, num4, post5,
+		                     num5, num6, num7, num8,
+		                     num9)
+		VALUES (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR},
+		                                #{model,jdbcType=VARCHAR}, #{counts,jdbcType=REAL}, #{unit,jdbcType=VARCHAR},
+		                                #{type,jdbcType=VARCHAR},
+		                                #{supplier,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+		                                #{post1,jdbcType=VARCHAR},
+		                                #{num1,jdbcType=REAL}, #{post2,jdbcType=VARCHAR}, #{num2,jdbcType=REAL},
+		                                                       #{post3,jdbcType=VARCHAR},
+		                                                       #{num3,jdbcType=REAL}, #{post4,jdbcType=VARCHAR},
+		                                                       #{num4,jdbcType=REAL}, #{post5,jdbcType=VARCHAR},
+		                                                       #{num5,jdbcType=REAL}, #{num6,jdbcType=REAL},
+		                                                       #{num7,jdbcType=REAL}, #{num8,jdbcType=REAL},
+		        #{num9,jdbcType=REAL})
+	</insert>
+	<insert id="insertSelective" parameterType="com.creating.dao.mapper.entity.goods.GoodsEty">
+		insert into t_goods
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="brand != null">
+				brand,
+			</if>
+			<if test="model != null">
+				model,
+			</if>
+			<if test="counts != null">
+				counts,
+			</if>
+			<if test="unit != null">
+				unit,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="supplier != null">
+				supplier,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="post1 != null">
+				post1,
+			</if>
+			<if test="num1 != null">
+				num1,
+			</if>
+			<if test="post2 != null">
+				post2,
+			</if>
+			<if test="num2 != null">
+				num2,
+			</if>
+			<if test="post3 != null">
+				post3,
+			</if>
+			<if test="num3 != null">
+				num3,
+			</if>
+			<if test="post4 != null">
+				post4,
+			</if>
+			<if test="num4 != null">
+				num4,
+			</if>
+			<if test="post5 != null">
+				post5,
+			</if>
+			<if test="num5 != null">
+				num5,
+			</if>
+			<if test="num6 != null">
+				num6,
+			</if>
+			<if test="num7 != null">
+				num7,
+			</if>
+			<if test="num8 != null">
+				num8,
+			</if>
+			<if test="num9 != null">
+				num9,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="brand != null">
+				#{brand,jdbcType=VARCHAR},
+			</if>
+			<if test="model != null">
+				#{model,jdbcType=VARCHAR},
+			</if>
+			<if test="counts != null">
+				#{counts,jdbcType=REAL},
+			</if>
+			<if test="unit != null">
+				#{unit,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="supplier != null">
+				#{supplier,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="post1 != null">
+				#{post1,jdbcType=VARCHAR},
+			</if>
+			<if test="num1 != null">
+				#{num1,jdbcType=REAL},
+			</if>
+			<if test="post2 != null">
+				#{post2,jdbcType=VARCHAR},
+			</if>
+			<if test="num2 != null">
+				#{num2,jdbcType=REAL},
+			</if>
+			<if test="post3 != null">
+				#{post3,jdbcType=VARCHAR},
+			</if>
+			<if test="num3 != null">
+				#{num3,jdbcType=REAL},
+			</if>
+			<if test="post4 != null">
+				#{post4,jdbcType=VARCHAR},
+			</if>
+			<if test="num4 != null">
+				#{num4,jdbcType=REAL},
+			</if>
+			<if test="post5 != null">
+				#{post5,jdbcType=VARCHAR},
+			</if>
+			<if test="num5 != null">
+				#{num5,jdbcType=REAL},
+			</if>
+			<if test="num6 != null">
+				#{num6,jdbcType=REAL},
+			</if>
+			<if test="num7 != null">
+				#{num7,jdbcType=REAL},
+			</if>
+			<if test="num8 != null">
+				#{num8,jdbcType=REAL},
+			</if>
+			<if test="num9 != null">
+				#{num9,jdbcType=REAL},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.creating.dao.mapper.entity.goods.GoodsEty">
+		update t_goods
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="brand != null">
+				brand = #{brand,jdbcType=VARCHAR},
+			</if>
+			<if test="model != null">
+				model = #{model,jdbcType=VARCHAR},
+			</if>
+			<if test="counts != null">
+				counts = #{counts,jdbcType=REAL},
+			</if>
+			<if test="unit != null">
+				unit = #{unit,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="supplier != null">
+				supplier = #{supplier,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="post1 != null">
+				post1 = #{post1,jdbcType=VARCHAR},
+			</if>
+			<if test="num1 != null">
+				num1 = #{num1,jdbcType=REAL},
+			</if>
+			<if test="post2 != null">
+				post2 = #{post2,jdbcType=VARCHAR},
+			</if>
+			<if test="num2 != null">
+				num2 = #{num2,jdbcType=REAL},
+			</if>
+			<if test="post3 != null">
+				post3 = #{post3,jdbcType=VARCHAR},
+			</if>
+			<if test="num3 != null">
+				num3 = #{num3,jdbcType=REAL},
+			</if>
+			<if test="post4 != null">
+				post4 = #{post4,jdbcType=VARCHAR},
+			</if>
+			<if test="num4 != null">
+				num4 = #{num4,jdbcType=REAL},
+			</if>
+			<if test="post5 != null">
+				post5 = #{post5,jdbcType=VARCHAR},
+			</if>
+			<if test="num5 != null">
+				num5 = #{num5,jdbcType=REAL},
+			</if>
+			<if test="num6 != null">
+				num6 = #{num6,jdbcType=REAL},
+			</if>
+			<if test="num7 != null">
+				num7 = #{num7,jdbcType=REAL},
+			</if>
+			<if test="num8 != null">
+				num8 = #{num8,jdbcType=REAL},
+			</if>
+			<if test="num9 != null">
+				num9 = #{num9,jdbcType=REAL},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.creating.dao.mapper.entity.goods.GoodsEty">
+		UPDATE t_goods
+		SET name     = #{name,jdbcType=VARCHAR},
+			brand    = #{brand,jdbcType=VARCHAR},
+			model    = #{model,jdbcType=VARCHAR},
+			counts   = #{counts,jdbcType=REAL},
+			unit     = #{unit,jdbcType=VARCHAR},
+			type     = #{type,jdbcType=VARCHAR},
+			supplier = #{supplier,jdbcType=VARCHAR},
+			remark   = #{remark,jdbcType=VARCHAR},
+			post1    = #{post1,jdbcType=VARCHAR},
+			num1     = #{num1,jdbcType=REAL},
+			post2    = #{post2,jdbcType=VARCHAR},
+			num2     = #{num2,jdbcType=REAL},
+			post3    = #{post3,jdbcType=VARCHAR},
+			num3     = #{num3,jdbcType=REAL},
+			post4    = #{post4,jdbcType=VARCHAR},
+			num4     = #{num4,jdbcType=REAL},
+			post5    = #{post5,jdbcType=VARCHAR},
+			num5     = #{num5,jdbcType=REAL},
+			num6     = #{num6,jdbcType=REAL},
+			num7     = #{num7,jdbcType=REAL},
+			num8     = #{num8,jdbcType=REAL},
+			num9     = #{num9,jdbcType=REAL}
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="minusGoods" parameterType="com.creating.dao.mapper.entity.goods.RecieveItems">
+		update t_goods
+		<set>
+			<if test="nums != null and nums != ''">
+				counts = counts - #{nums},
+			</if>
+			<if test="n1 != null and n1 != ''">
+				num1 = num1 - #{n1},
+			</if>
+			<if test="n2 != null and n2 != ''">
+				num2 = num2 - #{n2},
+			</if>
+			<if test="n3 != null and n3 != ''">
+				num3 = num3 - #{n3},
+			</if>
+			<if test="n4 != null and n4 != ''">
+				num4 = num4 - #{n4},
+			</if>
+			<if test="n5 != null and n5 != ''">
+				num5 = num5 - #{n5},
+			</if>
+			<if test="n6 != null and n6 != ''">
+				num6 = num6 - #{n6},
+			</if>
+			<if test="n7 != null and n7 != ''">
+				num7 = num7 - #{n7},
+			</if>
+			<if test="n8 != null and n8 != ''">
+				num8 = num8 - #{n8},
+			</if>
+			<if test="n9 != null and n9 != ''">
+				num9 = num9 - #{n9},
+			</if>
+		</set>
+		<where>
+			id = #{gid}
+		</where>
+
+	</update>
+</mapper>

@@ -1,0 +1,87 @@
+blockquote, body, button, dd, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, hr, input, legend, li, ol, p, pre, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, button, input, select, textarea {
+    font: 12px/1.5 微软雅黑,Tahoma, Verdana,  新宋体
+}
+
+.x-panel-body-default, html * {
+    font-family: 微软雅黑;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%
+}
+
+address, cite, dfn, em, var {
+    font-style: normal
+}
+
+code, kbd, pre, samp {
+    font-family: courier new, courier, monospace
+}
+
+li, ol, ul {
+    list-style: none
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: #7B878E;
+    font-weight: 400;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #7B878E;
+}
+
+sup {
+    vertical-align: text-top
+}
+
+sub {
+    vertical-align: text-bottom
+}
+
+legend {
+    color: #000
+}
+
+fieldset, img {
+    border: 0
+}
+
+button, input, select, textarea {
+    font-size: 100%
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+.dayp {
+    text-align: center;
+    font-size: 16px
+}
+
+.daytime {
+    font-size: 30px;
+    font-weight: 700;
+    color: #D6A176;
+}
+
+.day {
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    background: url(../images/home/daybg.png) no-repeat;
+    display: inline-block;
+    height: 83px;
+    width: 123px;
+    line-height: 83px;
+}

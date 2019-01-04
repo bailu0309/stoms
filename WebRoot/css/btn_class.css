@@ -1,0 +1,113 @@
+.btn_query {
+    background-image: url(../ext-3.4/icons/zoom.png) !important;
+}
+.btn_add {
+    background-image: url(../ext-3.4/icons/add.png) !important;
+}
+.btn_date {
+    background-image: url(../ext-3.4/icons/date.png) !important;
+}
+.btn_update {
+	background: url(../ext-3.4/icons/wrench_orange.png) left center no-repeat
+		!important;
+}
+.btn_save {
+    background-image: url(../ext-3.4/icons/accept.png) !important; 
+}
+.btn_modify {
+    background-image: url(../ext-3.4/icons/wrench_orange.png) !important; 
+}
+.btn_publish {
+    background-image: url(../ext-3.4/icons/page_world.png) !important;
+}
+.btn_cancel {
+    background-image: url(../ext-3.4/icons/cancel.png) !important;
+}
+
+.btn_view {
+    background-image: url(../ext-3.4/icons/page_find.png) !important;
+}
+
+.btn_delete {
+    background-image: url(../ext-3.4/icons/delete.png) !important;
+}
+
+.btn_refresh {
+    background-image: url(../ext-3.4/icons/arrow_refresh_small.png) !important;
+}
+.btn_win_close {
+    background-image: url(../ext-3.4/icons/cross.png) !important;
+}
+.btn_win_flag {
+	background: url(../ext-3.4/icons/application_view_columns.png) left center no-repeat !important;
+}
+.btn_detail {
+    background-image: url(../ext-3.4/icons/page_find.png) !important;
+}
+
+.btn_turn_left {
+    background-image: url(../ext-3.4/icons/arrow_turn_left.png) !important;
+}
+
+.btn_turn_right {
+    background-image: url(../ext-3.4/icons/arrow_turn_right.png) !important;
+}
+.sy-import_excel{
+	background: url(../ext-3.4/icons/import_excel.png) left center no-repeat !important;
+}
+.btn_printer{
+    background-image: url(../ext-3.4/icons/printer.png) !important;
+	
+}
+.btn_refresh{
+    background-image: url(../images/icons/refresh.jpg) !important;
+}
+.btn_down{
+    background-image: url(../ext-3.4/icons/arrow_down.png) !important;
+}
+.btn_icon_add{background-image: url(../images/icons/add.png) !important;}
+.btn_icon_addall{background-image: url(../images/icons/addall.png) !important;}
+.btn_icon_addrow{background-image: url(../images/icons/addrow.png) !important;}
+.btn_icon_call{background-image: url(../images/icons/call.png) !important;}
+.btn_icon_clear{background-image: url(../images/icons/clear.png) !important;}
+.btn_icon_copy{background-image: url(../images/icons/copy.png) !important;}
+.btn_icon_delete{background-image: url(../images/icons/delete.png) !important;}
+.btn_icon_deleterow{background-image: url(../images/icons/deleterow.png) !important;}
+.btn_icon_edit{background-image: url(../images/icons/edit.png) !important;}
+.btn_icon_mobile{background-image: url(../images/icons/mobile.png) !important;}
+.btn_icon_move{background-image: url(../images/icons/move.png) !important;}
+.btn_icon_moveall{background-image: url(../images/icons/moveall.png) !important;}
+.btn_icon_msg{background-image: url(../images/icons/msg.png) !important;}
+.btn_icon_no{background-image: url(../images/icons/no.png) !important;}
+.btn_icon_phone{background-image: url(../images/icons/phone.png) !important;}
+.btn_icon_play{background-image: url(../images/icons/play.png) !important;}
+.btn_icon_preview{background-image: url(../images/icons/preview.png) !important;}
+.btn_icon_reset{background-image: url(../images/icons/reset.png) !important;}
+.btn_icon_save{background-image: url(../images/icons/save.png) !important;}
+.btn_icon_search{background-image: url(../images/icons/search.png) !important;}
+.btn_icon_setup{background-image: url(../images/icons/setup.png) !important;}
+.btn_icon_stop{background-image: url(../images/icons/stop.png) !important;}
+.btn_icon_yes{background-image: url(../images/icons/yes.png) !important;}
+.btn_icon_clock{background-image: url(../images/icons/clock.png) !important;}
+.btn_icon_yygh{background-image: url(../images/icons/yygh.png) !important;}
+.btn_icon_dxtb{background-image: url(../images/message.png) !important;}
+.btn_icon_wxtb{background-image: url(../images/icons/mydoctor.png) !important;}
+.btn_icon_jkzltb{background-image: url(../images/icons/healthroad.png) !important;}
+.btn_bigsave {
+    background-image: url(../images/icons/bigsave.png) !important; 
+    height: 20px !important;
+	width: 123px !important;
+}
+.btn_send {
+    background-image: url(../images/icons/send.png) !important; 
+    height: 22px !important;
+	width: 90px !important;
+}
+.btn_help {
+    background-image: url(../ext-3.4/icons/help.png) !important; 
+}
+.btn_appoint {
+    background-image: url(../ext-3.4/icons/award_star_add.png) !important; 
+}
+
+.btn_icon_warn{background-image: url(../images/icons/odate11.png) !important;}

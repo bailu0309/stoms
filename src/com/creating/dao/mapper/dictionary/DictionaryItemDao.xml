@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.creating.dao.mapper.dictionary.DictionaryItemDao">
+    <select id="queryAllDictItems" resultType="java.util.Map">
+        SELECT
+            code,
+            text,
+            typeid
+        FROM M_DICTIONARY_ITEMS
+        ORDER BY typeid, sort
+    </select>
+
+
+    <select id="selectDictionaryItemCount" parameterType="com.creating.dao.mapper.entity.dictionary.DictionaryItem"
+            resultType="java.lang.Integer">
+        select count(*) from M_DICTIONARY_ITEMS
+        <where>
+            <if test="typeid!=null and typeid!=''">and typeid = #{typeid}</if>
+        </where>
+    </select>
+
+    <select id="selectDictionaryItem" parameterType="com.creating.dao.mapper.entity.dictionary.DictionaryItem"
+            resultType="com.creating.dao.mapper.entity.dictionary.DictionaryItem">
+        select * from M_DICTIONARY_ITEMS
+        <where>
+            <if test="typeid!=null and typeid!=''">and typeid = #{typeid}</if>
+        </where>
+        order by sort
+    </select>
+
+    <insert id="insertDictionaryItem" parameterType="com.creating.dao.mapper.entity.dictionary.DictionaryItem">
+        INSERT INTO M_DICTIONARY_ITEMS
+        (
+            code,
+            text,
+            typeid,
+            sort
+        )
+        VALUES (
+            #{code ,jdbcType=VARCHAR},
+            #{text ,jdbcType=VARCHAR},
+            #{typeid ,jdbcType=VARCHAR},
+            #{sort,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateDictionaryItem">
+        update M_DICTIONARY_ITEMS
+        <set>
+            code = #{code ,jdbcType=VARCHAR},
+            text = #{text ,jdbcType=VARCHAR},
+            typeid = #{typeid ,jdbcType=VARCHAR},
+            sort = #{sort,jdbcType=VARCHAR}
+        </set>
+        <where>
+            fid = #{fid}
+        </where>
+    </update>
+
+
+    <delete id="deleteDictionaryItem">
+        delete from M_DICTIONARY_ITEMS
+        <where>
+            fid = #{fid}
+        </where>
+    </delete>
+</mapper>

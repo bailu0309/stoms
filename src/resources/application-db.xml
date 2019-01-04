@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+
+   <!-- <bean id="datasourcePool" abstract="true" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="initialSize" value="1" />
+        <property name="minIdle" value="1" />
+        <property name="maxActive" value="200" />
+        <property name="maxWait" value="6000" />
+        <property name="timeBetweenEvictionRunsMillis" value="6000" />
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        &lt;!&ndash;<property name="validationQuery" value="${dbPool.validationQuery}" />&ndash;&gt;
+        &lt;!&ndash;<property name="testWhileIdle" value="true" />&ndash;&gt;
+        &lt;!&ndash;<property name="testOnBorrow" value="false" />&ndash;&gt;
+        &lt;!&ndash;<property name="testOnReturn" value="false" />&ndash;&gt;
+        <property name="poolPreparedStatements" value="false" />
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+      &lt;!&ndash;  <property name="filters" value="stat,log4j,wall" />&ndash;&gt;
+    </bean>-->
+
+
+    <bean id="mysqlDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <!--<property name="url" value="jdbc:mysql://192.168.1.114:3308/nqc?characterEncoding=UTF-8&amp;serverTimezone=CTT"/>-->
+        <!--<property name="url" value="jdbc:mysql://123.206.178.191:3306/nqc?characterEncoding=UTF-8&amp;serverTimezone=CTT"/>-->
+        <!--<property name="url" value="jdbc:mysql://192.168.2.225:3306/nqc?characterEncoding=UTF-8&amp;serverTimezone=CTT"/>-->
+        <property name="url" value="jdbc:mysql://123.206.178.191:3306/storage?characterEncoding=UTF-8&amp;serverTimezone=CTT"/>
+        <property name="username" value="bailu"/>
+        <property name="password" value="Creating!@#123"/>
+        <property name="initialSize" value="1"/>
+        <property name="minIdle" value="1"/>
+        <property name="maxActive" value="200"/>
+        <property name="maxWait" value="6000"/>
+        <property name="timeBetweenEvictionRunsMillis" value="6000"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <!--<property name="validationQuery" value="${dbPool.validationQuery}" />-->
+        <!--<property name="testWhileIdle" value="true" />-->
+        <!--<property name="testOnBorrow" value="false" />-->
+        <!--<property name="testOnReturn" value="false" />-->
+        <property name="poolPreparedStatements" value="false"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20"/>
+    </bean>
+
+    <bean id="dataSource" parent="mysqlDataSource">
+       <!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+        <property name="url" value="jdbc:oracle:thin:@192.168.1.148:1521:ORCL" />
+        <property name="username" value="NQC" />
+        <property name="password" value="NQC" />-->
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+  <!--  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+        <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:MBL" />
+        <property name="username" value="NQC" />
+        <property name="password" value="NQC" />
+    </bean>-->
+
+
+</beans>

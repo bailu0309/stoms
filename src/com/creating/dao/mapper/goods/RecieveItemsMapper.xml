@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.creating.dao.mapper.goods.RecieveItemsMapper">
+  <resultMap id="BaseResultMap" type="com.creating.dao.mapper.entity.goods.RecieveItems">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="rid" jdbcType="INTEGER" property="rid" />
+    <result column="gid" jdbcType="INTEGER" property="gid" />
+    <result column="nums" jdbcType="INTEGER" property="nums" />
+    <result column="n1" jdbcType="INTEGER" property="n1" />
+    <result column="n2" jdbcType="INTEGER" property="n2" />
+    <result column="n3" jdbcType="INTEGER" property="n3" />
+    <result column="n4" jdbcType="INTEGER" property="n4" />
+    <result column="n5" jdbcType="INTEGER" property="n5" />
+    <result column="n6" jdbcType="INTEGER" property="n6" />
+    <result column="n7" jdbcType="INTEGER" property="n7" />
+    <result column="n8" jdbcType="INTEGER" property="n8" />
+    <result column="n9" jdbcType="INTEGER" property="n9" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, rid, gid, nums, n1, n2, n3, n4, n5, n6, n7, n8, n9
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_recieve_items
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_recieve_items
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.creating.dao.mapper.entity.goods.RecieveItems">
+    insert into t_recieve_items (id, rid, gid, 
+      nums, n1, n2, n3, 
+      n4, n5, n6, n7, 
+      n8, n9)
+    values (#{id,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER}, #{gid,jdbcType=INTEGER}, 
+      #{nums,jdbcType=INTEGER}, #{n1,jdbcType=INTEGER}, #{n2,jdbcType=INTEGER}, #{n3,jdbcType=INTEGER}, 
+      #{n4,jdbcType=INTEGER}, #{n5,jdbcType=INTEGER}, #{n6,jdbcType=INTEGER}, #{n7,jdbcType=INTEGER}, 
+      #{n8,jdbcType=INTEGER}, #{n9,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.creating.dao.mapper.entity.goods.RecieveItems">
+    insert into t_recieve_items
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="rid != null">
+        rid,
+      </if>
+      <if test="gid != null">
+        gid,
+      </if>
+      <if test="nums != null">
+        nums,
+      </if>
+      <if test="n1 != null">
+        n1,
+      </if>
+      <if test="n2 != null">
+        n2,
+      </if>
+      <if test="n3 != null">
+        n3,
+      </if>
+      <if test="n4 != null">
+        n4,
+      </if>
+      <if test="n5 != null">
+        n5,
+      </if>
+      <if test="n6 != null">
+        n6,
+      </if>
+      <if test="n7 != null">
+        n7,
+      </if>
+      <if test="n8 != null">
+        n8,
+      </if>
+      <if test="n9 != null">
+        n9,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rid != null">
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null">
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="nums != null">
+        #{nums,jdbcType=INTEGER},
+      </if>
+      <if test="n1 != null">
+        #{n1,jdbcType=INTEGER},
+      </if>
+      <if test="n2 != null">
+        #{n2,jdbcType=INTEGER},
+      </if>
+      <if test="n3 != null">
+        #{n3,jdbcType=INTEGER},
+      </if>
+      <if test="n4 != null">
+        #{n4,jdbcType=INTEGER},
+      </if>
+      <if test="n5 != null">
+        #{n5,jdbcType=INTEGER},
+      </if>
+      <if test="n6 != null">
+        #{n6,jdbcType=INTEGER},
+      </if>
+      <if test="n7 != null">
+        #{n7,jdbcType=INTEGER},
+      </if>
+      <if test="n8 != null">
+        #{n8,jdbcType=INTEGER},
+      </if>
+      <if test="n9 != null">
+        #{n9,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.creating.dao.mapper.entity.goods.RecieveItems">
+    update t_recieve_items
+    <set>
+      <if test="rid != null">
+        rid = #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null">
+        gid = #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="nums != null">
+        nums = #{nums,jdbcType=INTEGER},
+      </if>
+      <if test="n1 != null">
+        n1 = #{n1,jdbcType=INTEGER},
+      </if>
+      <if test="n2 != null">
+        n2 = #{n2,jdbcType=INTEGER},
+      </if>
+      <if test="n3 != null">
+        n3 = #{n3,jdbcType=INTEGER},
+      </if>
+      <if test="n4 != null">
+        n4 = #{n4,jdbcType=INTEGER},
+      </if>
+      <if test="n5 != null">
+        n5 = #{n5,jdbcType=INTEGER},
+      </if>
+      <if test="n6 != null">
+        n6 = #{n6,jdbcType=INTEGER},
+      </if>
+      <if test="n7 != null">
+        n7 = #{n7,jdbcType=INTEGER},
+      </if>
+      <if test="n8 != null">
+        n8 = #{n8,jdbcType=INTEGER},
+      </if>
+      <if test="n9 != null">
+        n9 = #{n9,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.creating.dao.mapper.entity.goods.RecieveItems">
+    update t_recieve_items
+    set rid = #{rid,jdbcType=INTEGER},
+      gid = #{gid,jdbcType=INTEGER},
+      nums = #{nums,jdbcType=INTEGER},
+      n1 = #{n1,jdbcType=INTEGER},
+      n2 = #{n2,jdbcType=INTEGER},
+      n3 = #{n3,jdbcType=INTEGER},
+      n4 = #{n4,jdbcType=INTEGER},
+      n5 = #{n5,jdbcType=INTEGER},
+      n6 = #{n6,jdbcType=INTEGER},
+      n7 = #{n7,jdbcType=INTEGER},
+      n8 = #{n8,jdbcType=INTEGER},
+      n9 = #{n9,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

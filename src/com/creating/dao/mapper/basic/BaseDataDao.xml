@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.creating.dao.mapper.basic.BaseDataDao">
+
+    <select id="getBaseDataListByType" parameterType="com.creating.dao.mapper.entity.basic.BaseData"
+            resultType="com.creating.dao.mapper.entity.basic.BaseData">
+        SELECT *
+        from ssp_basedata
+        WHERE 1=1
+        <if test="type != null  and type != ''">AND type = #{type}</if>
+        <if test="value != null  and value != ''">AND value = #{value}</if>
+    </select>
+
+    <insert id="insert" parameterType="com.creating.dao.mapper.entity.basic.BaseData">
+        INSERT INTO ssp_basedata (name, value, type)
+        VALUES (#{name}, #{value}, #{type})
+    </insert>
+
+</mapper>

@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.creating.dao.mapper.basic.UserDao">
+
+	<resultMap id="mainUser" type="com.creating.dao.mapper.entity.basic.UserEty">
+		<result property="name" column="name"/>
+		<result property="username" column="username"/>
+		<association property="roleEty" javaType="com.creating.dao.mapper.entity.basic.RoleEty">
+			<result property="roleName" column="rolename"/>
+		</association>
+	</resultMap>
+
+	<select id="queryUser" parameterType="int" resultMap="mainUser">
+		SELECT
+			u.NAME,
+			u.username
+		FROM M_USER u, M_USERROLE UR, M_ROLE R
+		WHERE u.ID = UR.USERID AND UR.ROLEID = R.ID
+	</select>
+
+	<select id="queryQcc" resultType="com.creating.dao.mapper.entity.basic.UserEty">
+		SELECT
+			u.NAME,
+			u.username,
+			ur.roleid roleids
+		FROM M_USER u, M_USERROLE UR
+		WHERE u.ID = UR.USERID AND UR.ROLEID IN ('100047', '100048')
+	</select>
+
+	<select id="queryProQcc" resultType="com.creating.dao.mapper.entity.basic.UserEty">
+		SELECT *
+		FROM M_USER u
+		WHERE u.name = '10001'
+	</select>
+
+
+	<sql id="page_head">SELECT *
+	                    FROM (SELECT
+		                          A.*,
+		                          ROWNUM RN
+	                          FROM (</sql>
+	<sql id="page_end"><![CDATA[
+		) A where ROWNUM <= (#{limit}+#{start})) where RN > #{start}
+		]]></sql>
+
+	<select id="selectLimitCount" parameterType="com.creating.dao.mapper.entity.basic.UserEty"
+	        resultType="java.lang.Integer">
+		SELECT count(1) from M_USER
+		WHERE 1=1
+		<if test="id != null ">AND id=#{id}</if>
+		<if test="username != null  and username != ''">AND (username like '%${username}%' or name like
+			'%${username}%')
+		</if>
+		<if test="password != null  and password != ''">AND password=#{password}</if>
+		<if test="depid != null  and depid != ''">AND depid=#{depid}</if>
+		<if test="name != null  and name != ''">AND (name like '%${name}%' or username like '%${name}%' )</if>
+	</select>
+
+	<select id="selectByLimit" parameterType="com.creating.dao.mapper.entity.basic.UserEty"
+	        resultType="com.creating.dao.mapper.entity.basic.UserEty">
+		SELECT
+		u.id,
+		u.NAME,
+		u.username,
+		u.PASSWORD,
+		u.STATUS,
+		u.insert_date,
+		u.depid,
+		u.mtype,
+		u.muserid,
+		u.musername,
+		d.fdesc depname,
+		GROUP_CONCAT(s.roleid) AS roleids,
+		GROUP_CONCAT(r.rolename) AS rolenames
+		FROM
+		M_USER u
+		LEFT JOIN M_USERROLE s ON u.id = s.userid
+		LEFT JOIN M_DEPARTMENT d ON u.depid = d.foffn
+		LEFT JOIN M_ROLE r ON s.roleid = r.id
+		<where>
+			<if test="id != null ">AND id=#{id}</if>
+			<if test="username != null  and username != ''">AND (username like '%${username}%' or name like
+				'%${username}%')
+			</if>
+			<if test="password != null  and password != ''">AND password=#{password}</if>
+			<if test="depid != null  and depid != ''">AND depid=#{depid}</if>
+			<if test="name != null  and name != ''">AND (name like '%${name}%' or username like '%${name}%' )</if>
+			<if test="status != null  and status != ''">AND status=#{status}</if>
+		</where>
+		GROUP BY u.id, u.name, u.username,u.password, u.status,u.insert_date,u.depid,
+		d.fdesc,u.mtype,u.muserid,u.musername
+		<if test="sort != null">order by ${sort} ${dir}</if>
+	</select>
+
+	<select id="selectMainUser" parameterType="com.creating.dao.mapper.entity.basic.UserEty"
+	        resultType="com.creating.dao.mapper.entity.basic.UserEty">
+		SELECT u.id, u.name, (u.name || ' ' || u.username) username
+		from M_USER u
+		where u.mtype = '1'
+		<if test="username != null  and username != ''">AND username like '%${username}%'</if>
+	</select>
+
+	<select id="listmainbyself" parameterType="com.creating.dao.mapper.entity.basic.UserEty"
+	        resultType="com.creating.dao.mapper.entity.basic.UserEty">
+		SELECT
+		u.id,
+		u.NAME,
+		u.username,
+		u.PASSWORD,
+		u.STATUS,
+		u.insert_date,
+		u.depid,
+		u.mtype,
+		u.muserid,
+		u.musername,
+		d.fdesc depname,
+		GROUP_CONCAT(s.roleid) AS roleids,
+		GROUP_CONCAT(r.rolename) AS rolenames
+		FROM
+		M_USER u
+		LEFT JOIN M_USERROLE s ON u.id = s.userid
+		LEFT JOIN M_DEPARTMENT d ON u.depid = d.foffn
+		LEFT JOIN M_ROLE r ON s.roleid = r.id
+		where (u.name = #{name} or u.muserid = #{name}
+		<if test="muserid != null  and muserid != ''">or u.muserid = #{muserid}</if>
+		)
+		GROUP BY u.id, u.name, u.username,u.password, u.status,u.insert_date,u.depid,
+		d.fdesc,u.mtype,u.muserid,u.musername
+	</select>
+
+	<select id="selectById" parameterType="int" resultType="com.creating.dao.mapper.entity.basic.UserEty">
+		SELECT
+			u.*,
+			u.fqgwym,
+			u.fqgwymdesc
+		FROM M_USER u LEFT JOIN tdu_hospital t ON u.name = t.fjgdm
+		WHERE u.id = #{id}
+	</select>
+
+	<select id="selectUserByName" parameterType="String" resultType="com.creating.dao.mapper.entity.basic.UserEty">
+		SELECT
+			t.*
+		FROM M_USER t
+		WHERE t.name = #{name}
+	</select>
+
+
+	<select id="queryQccByHospname" parameterType="String" resultType="com.creating.dao.mapper.entity.basic.UserEty">
+		SELECT t.*
+		FROM M_USER t
+		WHERE name = (SELECT qccid
+		              FROM t_medicalinstitution
+		              WHERE orgcode = #{name})
+	</select>
+
+	<delete id="deleteById" parameterType="int">
+		DELETE FROM M_USER
+		WHERE id = #{id}
+	</delete>
+
+	<insert id="insert" parameterType="com.creating.dao.mapper.entity.basic.UserEty">
+		INSERT INTO M_USER (
+			username, password, name, status, depid, insert_date, mtype, muserid, musername)
+		VALUES (
+			#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+			#{status,jdbcType=VARCHAR}, #{depid,jdbcType=VARCHAR}, #{insert_date,jdbcType=DATE},
+			#{mtype,jdbcType=VARCHAR},
+			#{muserid,jdbcType=VARCHAR}, #{musername,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="updateById" parameterType="com.creating.dao.mapper.entity.basic.UserEty">
+		UPDATE M_USER
+		<set>
+			<if test="username != null and username != '' ">username=#{username},</if>
+			<if test="password != null and password != ''">password=#{password},</if>
+			<if test="name != null and name != ''">name=#{name},</if>
+			<if test="status != null and status != ''">status=#{status},</if>
+			<if test="depid != null and depid != ''">depid=#{depid},</if>
+			<if test="mtype != null and mtype != ''">mtype=#{mtype},</if>
+			<if test="muserid != null and muserid != ''">muserid=#{muserid},</if>
+			<if test="musername != null and musername != ''">musername=#{musername},</if>
+		</set>
+		WHERE
+		id=#{id}
+	</update>
+
+	<insert id="insertRole" parameterType="java.util.Map">
+		INSERT INTO M_USERROLE (
+			id, userid, roleid)
+		VALUES (
+			#{id}, #{userId}, #{roleId}
+		)
+	</insert>
+
+	<delete id="deleteRole" parameterType="int">
+		DELETE FROM M_USERROLE
+		WHERE userid = #{userid}
+	</delete>
+
+	<select id="selectUserMenuMap" parameterType="int" resultType="com.creating.dao.mapper.entity.basic.MenuEty">
+		SELECT t.*
+		FROM (
+			     SELECT
+				     GROUP_CONCAT(sr.menuId ORDER BY forder) AS menuIds,
+				     sm.parantMenuID,
+				     (SELECT forder
+				      FROM M_MENU
+				      WHERE id = sm.parantmenuid)               px
+			     FROM M_ROLERESOURCE sr
+				     LEFT JOIN M_MENU sm
+					     ON sr.menuId = sm.id
+			     WHERE roleId IN (
+				     SELECT roleId
+				     FROM M_USERROLE
+				     WHERE userid = #{userid}
+			     )
+			           AND sm.isValiDate = 0 AND sm.parantMenuID != 0
+			     GROUP BY sm.parantMenuID
+			     ORDER BY px, sm.forder) t
+		WHERE px IS NOT NULL
+		ORDER BY px
+	</select>
+
+	<select id="getZjID" parameterType="int" resultType="String">
+		SELECT f_sno('M_USERROLE') AS id
+		FROM dual
+	</select>
+
+	<select id="roleID" parameterType="int" resultType="String">
+		SELECT ROLEID
+		FROM M_USERROLE
+		WHERE userid = #{userid}
+	</select>
+
+	<update id="updateUser" parameterType="com.creating.dao.mapper.entity.basic.UserEty">
+		UPDATE M_USER
+		<set>username=#{username},password=#{password}</set>
+		WHERE name=#{name}
+	</update>
+
+	<select id="queryUserByName" parameterType="com.creating.dao.mapper.entity.basic.UserEty"
+	        resultType="com.creating.dao.mapper.entity.basic.UserEty">
+		SELECT u.*
+		FROM M_USER u
+		WHERE name = #{name}
+	</select>
+
+	<select id="queryUserByNameId" parameterType="com.creating.dao.mapper.entity.basic.UserEty"
+	        resultType="com.creating.dao.mapper.entity.basic.UserEty">
+		SELECT u.* from M_USER u where name=#{name}
+		<if test="id != null and id != ''">AND id != '${id}'</if>
+	</select>
+
+	<insert id="insertUser" parameterType="com.creating.dao.mapper.entity.basic.UserEty">
+		INSERT INTO M_USER (
+			id, username, password, name, insert_date)
+		VALUES (
+			#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+			#{name,jdbcType=VARCHAR}, sysdate
+		)
+	</insert>
+
+	<select id="listPerson4Task" parameterType="com.creating.dao.mapper.entity.basic.UserEty"
+	        resultType="com.creating.dao.mapper.entity.basic.UserEty">
+		SELECT t.name,(t.name || t.username) username from M_USER t
+		WHERE 1=1
+		<if test="depid != null and depid != ''">AND depid= '${depid}'</if>
+
+	</select>
+
+	<update id="updateUserStatus">
+		UPDATE M_USER
+		<set>
+			<if test="status != null and status != ''">status=#{status},</if>
+		</set>
+		<where>
+			name=#{name}
+		</where>
+	</update>
+
+</mapper>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.creating.dao.mapper.basic.MenuDao">
+    <select id="getListByParentId" resultType="com.creating.dao.mapper.entity.basic.MenuEty" parameterType="int">
+        SELECT *
+        FROM M_MENU
+        WHERE parantMenuID = #{id}
+        ORDER BY forder, id, menuName
+    </select>
+    <select id="selectById" resultType="com.creating.dao.mapper.entity.basic.MenuEty" parameterType="java.lang.Integer">
+        SELECT *
+        FROM M_MENU
+        WHERE id = #{ids}
+        ORDER BY id, menuName
+    </select>
+    <select id="selectLimitCount" parameterType="com.creating.dao.mapper.entity.basic.MenuEty"
+            resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM M_MENU
+    </select>
+
+    <select id="selectByLimit" parameterType="com.creating.dao.mapper.entity.basic.MenuEty"
+            resultType="com.creating.dao.mapper.entity.basic.MenuEty">
+        SELECT * FROM M_MENU
+        WHERE 1=1
+        <if test="sort != null">order by ${sort} ${dir}</if>
+        <if test="limit != null">limit ${start}, ${limit}</if>
+    </select>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM M_MENU
+        WHERE id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.creating.dao.mapper.entity.basic.MenuEty">
+        INSERT INTO M_MENU (
+            id, menuName, parantMenuID, icon, openIcon, type, isValiDate, description, jsClassFile, actionPath, forder
+        )
+        VALUES (
+            #{id}, #{menuName}, #{parantMenuID}, #{icon}, #{openIcon}, #{type}, #{isValiDate}, #{description},
+                   #{jsClassFile}, #{actionPath}, #{forder}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="com.creating.dao.mapper.entity.basic.MenuEty">
+        UPDATE M_MENU
+        <set>
+            <if test="menuName != null  and menuName != ''">menuName=#{menuName},</if>
+            <if test="parantMenuID != null  and parantMenuID != ''">parantMenuID=#{parantMenuID},</if>
+            <if test="icon != null  and icon != ''">icon=#{icon},</if>
+            <if test="openIcon != null  and openIcon != ''">openIcon=#{openIcon},</if>
+            <if test="type != null  and type != ''">type=#{type},</if>
+            <if test="isValiDate != null  and isValiDate != ''">isValiDate=#{isValiDate},</if>
+            <if test="description != null  and description != ''">description=#{description},</if>
+            <if test="jsClassFile != null ">jsClassFile=#{jsClassFile},</if>
+            <if test="actionPath != null  ">actionPath=#{actionPath},</if>
+            <if test="forder != null  ">forder=#{forder},</if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <select id="getUsingMenu" parameterType="int" resultType="int">
+        SELECT count(1)
+        FROM M_ROLERESOURCE
+        WHERE menuId = #{menuId}
+    </select>
+
+    <select id="getZjID" parameterType="int" resultType="String">
+        SELECT max(id) + 1
+        FROM M_MENU
+        WHERE id != '9999'
+    </select>
+</mapper>

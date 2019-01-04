@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.creating.dao.mapper.basic.RoleDao">
+
+    <select id="selectLimitCount" parameterType="com.creating.dao.mapper.entity.basic.RoleEty"
+            resultType="java.lang.Integer">
+        SELECT count(1) from M_ROLE
+        WHERE 1=1
+        <if test="id != null ">AND id=#{id}</if>
+        <if test="roleName != null  and roleName != ''">AND roleName=#{roleName}</if>
+        <if test="describle != null  and describle != ''">AND describle=#{describle}</if>
+    </select>
+
+    <select id="selectByLimit" parameterType="com.creating.dao.mapper.entity.basic.RoleEty"
+            resultType="com.creating.dao.mapper.entity.basic.RoleEty">
+        SELECT sr.id, sr.roleName, sr.describle,
+        GROUP_CONCAT(srs.menuId) as menuId
+        from M_ROLE sr
+        left join M_ROLERESOURCE srs on sr.id = srs.roleId
+        WHERE 1=1
+        <if test="id != null ">AND id=#{id}</if>
+        <if test="roleName != null  and roleName != ''">AND roleName=#{roleName}</if>
+        <if test="describle != null  and describle != ''">AND describle=#{describle}</if>
+        GROUP BY sr.id,sr.roleName, sr.describle
+        <if test="sort != null">order by ${sort} ${dir}</if>
+        <!-- <if test="limit != null">limit ${start}, ${limit}</if> -->
+    </select>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM M_ROLE
+        WHERE id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.creating.dao.mapper.entity.basic.RoleEty">
+        INSERT INTO M_ROLE (
+            id, roleName, describle)
+        VALUES (
+            #{id}, #{roleName}, #{describle}
+        )
+    </insert>
+
+    <update id="updateById" parameterType="com.creating.dao.mapper.entity.basic.RoleEty">
+        UPDATE M_ROLE SET
+        <if test="roleName != null  and roleName != ''">roleName=#{roleName},</if>
+        <if test="describle != null  and describle != ''">describle=#{describle},</if>
+        id = #{id}
+        WHERE id=#{id}
+    </update>
+    <insert id="insertMenu" parameterType="java.util.Map">
+        INSERT INTO M_ROLERESOURCE (
+            id, roleId, menuId)
+        VALUES (
+            #{id}, #{roleId}, #{menuId}
+        )
+    </insert>
+
+    <delete id="deleteMenu" parameterType="int">
+        DELETE FROM M_ROLERESOURCE
+        WHERE roleId = #{roleId}
+    </delete>
+    <delete id="deleteHospitalById" parameterType="String">
+        DELETE FROM tdu_hospital
+        WHERE fjgdm = #{fuser}
+    </delete>
+    <delete id="deleteHospitalUserById" parameterType="String">
+        DELETE FROM tdu_user
+        WHERE fjgbm = #{fuser}
+    </delete>
+    <select id="getUsingRole" parameterType="int" resultType="int">
+        SELECT count(1)
+        FROM M_USERROLE
+        WHERE roleId = #{roleId}
+    </select>
+
+    <select id="getZjID" parameterType="int" resultType="String">
+        SELECT f_sno('M_ROLERESOURCE') AS id
+        FROM dual
+    </select>
+
+</mapper>

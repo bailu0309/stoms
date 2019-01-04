@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.creating.dao.mapper.basic.DepartDao">
+	<select id="selectByLimit" parameterType="com.creating.dao.mapper.entity.basic.DepartEty"
+	        resultType="com.creating.dao.mapper.entity.basic.DepartEty">
+		SELECT * FROM M_DEPARTMENT T
+		<where>
+			<!--<if test="foffn != null and foffn != ''"> AND foffn != '${foffn}' </if>-->
+			<if test="fdesc != null and fdesc != ''">AND (fdesc like '%${fdesc}%' OR FOFFN LIKE '%${fdesc}%' OR FQUN
+				LIKE '%${fdesc}%')
+			</if>
+		</where>
+	</select>
+
+	<select id="queryAllGoods"
+	        resultType="com.creating.dao.mapper.entity.goods.GoodsEty">
+		select *
+		from t_goods
+		<where>
+			<if test="name != null and name != ''">name like '%${name}%'</if>
+			<if test="brand != null and brand != ''">brand like '%${brand}%'</if>
+		</where>
+	</select>
+
+	<select id="queryDepartOrder" parameterType="com.creating.dao.mapper.entity.basic.DepartEty"
+	        resultType="com.creating.dao.mapper.entity.basic.DepartEty">
+		SELECT * FROM M_DEPARTMENT T
+		<where>
+		</where>
+		<if test="fdesc != null and fdesc != ''">ORDER BY CASE WHEN (fdesc like '%${fdesc}%' OR FOFFN LIKE '%${fdesc}%'
+			OR FQUN LIKE '%${fdesc}%') THEN 1 ELSE 9999 END
+		</if>
+	</select>
+
+	<insert id="insert" parameterType="com.creating.dao.mapper.entity.basic.DepartEty">
+		INSERT INTO M_DEPARTMENT (fid, foffn, fdesc, fqun, fst)
+		VALUES (
+			replace(uuid(), '-', ''), #{foffn,jdbcType=VARCHAR}, #{fdesc,jdbcType=VARCHAR},
+			#{fqun,jdbcType=VARCHAR}, #{fst,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="updateById" parameterType="com.creating.dao.mapper.entity.basic.DepartEty">
+		UPDATE M_DEPARTMENT
+		<set>
+			<if test="fdesc != null and fdesc != '' ">fdesc=#{fdesc},</if>
+			<if test="fqun != null and fqun != ''">fqun=#{fqun},</if>
+			<if test="fst != null and fst != ''">fst=#{fst},</if>
+		</set>
+		WHERE
+		fid=#{fid}
+	</update>
+
+	<delete id="deleteById" parameterType="com.creating.dao.mapper.entity.basic.DepartEty">
+		DELETE FROM M_DEPARTMENT
+		WHERE fid = #{fid}
+	</delete>
+
+	<select id="queryDept4Pad" resultType="java.util.Map">
+		SELECT
+			T.FOFFN,
+			FDESC,
+			FQUN
+		FROM M_DEPARTMENT T
+	</select>
+
+
+	<select id="queryDepart4Task" parameterType="com.creating.dao.mapper.entity.basic.TreeNodeEty"
+	        resultType="com.creating.dao.mapper.entity.basic.TreeNodeEty">
+		SELECT t.foffn id,t.fdesc text,v.codeid FROM M_DEPARTMENT T,V_PERSONTASK V,T_TASK_DEPART d
+		<where>
+			V.DEPID = T.FOFFN
+			<if test="codeid != null and codeid != ''">and v.codeid = #{codeid}</if>
+			<if test="depid != null and depid != ''">and (d.redisdepid = #{depid} or v.depid = #{depid}) and v.depid =
+				d.depid
+			</if>
+			<if test="personid != null and personid != ''">and v.personid = #{personid}</if>
+		</where>
+		group by foffn,fdesc,codeid
+	</select>
+
+
+	<select id="queryUserByDepart4Task" parameterType="com.creating.dao.mapper.entity.basic.TreeNodeEty"
+	        resultType="com.creating.dao.mapper.entity.basic.TreeNodeEty">
+		SELECT t.name id,t.username text,1 leaf FROM M_USER T,V_PERSONTASK V
+		<where>
+			V.PERSONID = T.NAME
+			<if test="codeid != null and codeid != ''">and v.codeid = #{codeid}</if>
+			<if test="id != null and id != ''">and v.depid = #{id}</if>
+			<if test="personid != null and personid != ''">and v.personid = #{personid}</if>
+		</where>
+		group by name,username
+	</select>
+
+	<select id="queryDepartTree4SelfEval" parameterType="com.creating.dao.mapper.entity.basic.TreeNodeEty"
+	        resultType="com.creating.dao.mapper.entity.basic.TreeNodeEty">
+		SELECT t.foffn id,t.fdesc text from M_DEPARTMENT T,T_TASK_DEPART v,T_CATALOG c
+		<where>
+			V.DEPID(+) = T.FOFFN and v.cid = c.cid
+			<if test="codeid != null and codeid != ''">and c.fkcode like '${codeid}%'</if>
+			<if test="depid != null and depid != ''">and (v.redisdepid = #{depid} or v.depid = #{depid})</if>
+		</where>
+		group by foffn,fdesc
+	</select>
+
+</mapper>

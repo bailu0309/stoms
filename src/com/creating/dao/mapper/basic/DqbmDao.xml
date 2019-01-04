@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.creating.dao.mapper.basic.DqbmDao">
+
+    <select id="listCity" parameterType="com.creating.dao.mapper.entity.basic.DqbmEty"
+            resultType="com.creating.dao.mapper.entity.basic.DqbmEty">
+        SELECT *
+        FROM M_AREACODE
+        WHERE administrative = 0
+    </select>
+
+    <select id="listXq" parameterType="com.creating.dao.mapper.entity.basic.DqbmEty"
+            resultType="com.creating.dao.mapper.entity.basic.DqbmEty">
+        SELECT *
+        FROM M_AREACODE
+        WHERE administrative IN (1, 2, 4) AND area_code LIKE '${area_code}%'
+    </select>
+
+    <select id="listXzjd" parameterType="com.creating.dao.mapper.entity.basic.DqbmEty"
+            resultType="com.creating.dao.mapper.entity.basic.DqbmEty">
+        SELECT *
+        FROM M_AREACODE
+        WHERE administrative IN (5, 7, 8) AND area_code LIKE '${area_code}%'
+    </select>
+
+    <select id="listCjs" parameterType="com.creating.dao.mapper.entity.basic.DqbmEty"
+            resultType="com.creating.dao.mapper.entity.basic.DqbmEty">
+        SELECT *
+        FROM M_AREACODE
+        WHERE administrative IN (3, 6, 9) AND area_code LIKE '${area_code}%'
+    </select>
+</mapper>

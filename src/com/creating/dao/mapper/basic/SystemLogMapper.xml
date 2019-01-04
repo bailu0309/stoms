@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.creating.dao.mapper.basic.SystemLogMapper">
+	<resultMap id="BaseResultMap" type="com.creating.dao.mapper.entity.basic.SystemLog">
+		<id column="ID" jdbcType="INTEGER" property="id"/>
+		<result column="VERSION" jdbcType="VARCHAR" property="version"/>
+		<result column="CONTENT" jdbcType="VARCHAR" property="content"/>
+		<result column="FTIME" jdbcType="TIMESTAMP" property="ftime"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, VERSION, CONTENT, FTIME
+	</sql>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from m_systemlog
+		where ID = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="querySystemLog" parameterType="com.creating.dao.mapper.entity.basic.SystemLog"
+	        resultType="com.creating.dao.mapper.entity.basic.SystemLog">
+		select
+		<include refid="Base_Column_List"/>
+		from m_systemlog t
+		<where>
+			<if test="content != null and content != ''">AND t.content like '%${content}%'</if>
+			<if test="sdate!=null and sdate!=''">
+				and t.ftime >= str_to_date('${sdate} 00:00:00','%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="edate!=null and edate!=''">
+				and str_to_date('${edate} 23:59:59', '%Y-%m-%d %H:%i:%s') >= t.ftime
+			</if>
+		</where>
+		order by ftime desc
+	</select>
+
+	<select id="selectLasted" resultType="com.creating.dao.mapper.entity.basic.SystemLog">
+		select
+		<include refid="Base_Column_List"/>
+		from m_systemlog
+		<where>
+
+		</where>
+		order by ftime desc
+		limit 0,1
+	</select>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		DELETE FROM m_systemlog
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.creating.dao.mapper.entity.basic.SystemLog">
+		INSERT INTO m_systemlog (ID, VERSION, CONTENT,
+		                         FTIME)
+		VALUES (#{id,jdbcType=INTEGER}, #{version,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
+		        #{ftime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.creating.dao.mapper.entity.basic.SystemLog">
+		insert into m_systemlog
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="version != null">
+				VERSION,
+			</if>
+			<if test="content != null">
+				CONTENT,
+			</if>
+			<if test="ftime != null">
+				FTIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=VARCHAR},
+			</if>
+			<if test="ftime != null">
+				#{ftime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.creating.dao.mapper.entity.basic.SystemLog">
+		update m_systemlog
+		<set>
+			<if test="version != null">
+				VERSION = #{version,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				CONTENT = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="ftime != null">
+				FTIME = #{ftime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.creating.dao.mapper.entity.basic.SystemLog">
+		UPDATE m_systemlog
+		SET VERSION = #{version,jdbcType=VARCHAR},
+			CONTENT = #{content,jdbcType=VARCHAR},
+			FTIME   = #{ftime,jdbcType=TIMESTAMP}
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>
