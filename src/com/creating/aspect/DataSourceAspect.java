@@ -17,6 +17,10 @@ public class DataSourceAspect implements MethodBeforeAdvice, AfterReturningAdvic
     @Override
     public void before(Method method, Object[] args, Object target) throws Throwable {
         //根据方法名切换数据源
+
+        if (1 == 1) {
+        }
+
 //        if (method.getDeclaringClass().getName().contains(".oracle.")) {
 //            DataSourceContextHolder.setDataSourceType(DataSourceContextHolder.DATA_SOURCE_ORACLE);
 //        } else {
