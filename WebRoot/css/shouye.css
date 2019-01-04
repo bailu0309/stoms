@@ -1,0 +1,79 @@
+sybody {
+    background: #f2f2f2
+}
+
+.indexmain {
+    width: 980px;
+    margin: 40px auto;
+}
+
+.indexbtn {
+    display: block;
+    cursor: pointer;
+    position: relative;
+    float: left;
+    width: 300px;
+    height: 300px;
+    margin: 0 25px 30px 0;
+    text-align: center;
+    background: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+    border-radius: 2px;
+}
+
+.indexbtn h2 {
+    color: #666;
+    font-weight: 400;
+    margin-top: 20px;
+    position: relative;
+    z-index: 2;
+    font-size: 16px;
+}
+
+.indexbtnimg {
+    margin-top: 40px;
+    position: relative;
+    z-index: 3;
+}
+
+.indexbtn {
+    font-size: 14px;
+}
+
+.indexbtn .arrow {
+    width: 210px;
+    height: 46px;
+    position: absolute;
+    right: 50%;
+    top: 225px;
+    opacity: 0;
+    z-index: -1;
+    border: 1px solid #2d64c4;
+    border-radius: 3px;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    background-size: 100% 100%
+}
+
+.indexbtn:hover h2 {
+    color: #2d64c4
+}
+
+.indexbtn:hover .arrow {
+    right: 45px;
+    opacity: 1;
+    z-index: 1;
+    -webkit-transition: right .3s linear .2s, opacity .3s linear .2s;
+    -moz-transition: right .3s linear .2s, opacity .3s linear .2s;
+    -o-transition: right .3s linear .2s, opacity .3s linear .2s;
+    transition: right .3s linear .2s, opacity .3s linear .2s
+}
+
+.indexbtn:hover {
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .3);
+}
