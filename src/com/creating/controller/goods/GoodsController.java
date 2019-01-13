@@ -2,16 +2,10 @@ package com.creating.controller.goods;
 
 import com.creating.controller.basic.BaseController;
 import com.creating.dao.base.BaseEntity;
-import com.creating.dao.mapper.basic.DepartDao;
-import com.creating.dao.mapper.entity.goods.GoodsEty;
-import com.creating.dao.mapper.entity.goods.RecieveInfo;
-import com.creating.dao.mapper.entity.goods.RecieveItems;
-import com.creating.dao.mapper.goods.GoodsEtyMapper;
+import com.creating.dao.mapper.entity.goods.*;
 import com.creating.service.goods.GoodsService;
 import com.creating.util.json.DateUtils;
 import com.creating.util.json.JSONGrid;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,8 +23,6 @@ public class GoodsController extends BaseController {
 
 
     @Autowired
-    private GoodsEtyMapper goodsMapper;
-    @Autowired
     private GoodsService goodsService;
 
 
@@ -38,25 +30,93 @@ public class GoodsController extends BaseController {
     public
     @ResponseBody
     String queryGoods(BaseEntity baseEntity, GoodsEty goods, HttpServletRequest request) throws Exception {
-        PageHelper.startPage(baseEntity.getPage(), baseEntity.getLimit());
-        Page<GoodsEty> page = (Page<GoodsEty>) goodsMapper.queryGoods(goods);
-        JSONObject retObj = JSONGrid.toJSon(page.getResult(), (int) page.getTotal(), DateUtils.datetimeFormat);
+        JSONObject retObj = goodsService.queryPageGoods(baseEntity, goods);
         return retObj.toString();
     }
-
 
     @RequestMapping("queryRecieveInfo.sdo")
     public
     @ResponseBody
-    String queryRecieveInfo(BaseEntity baseEntity, RecieveInfo recieveInfo, HttpServletRequest request) throws Exception {
-        JSONObject retObj = goodsService.queryRecieveInfo(baseEntity, recieveInfo, request);
-
+    String queryRecieveInfo(BaseEntity baseEntity, RecieveEty recieveInfo, HttpServletRequest request) throws Exception {
+        JSONObject retObj = goodsService.queryPageRecieves(baseEntity, recieveInfo);
         return retObj.toString();
+    }
+
+
+    @RequestMapping("queryRecieveItems.sdo")
+    public
+    @ResponseBody
+    String queryRecieveInfo(BaseEntity baseEntity, RecieveItemsEty recieveItemsEty, HttpServletRequest request) throws Exception {
+        JSONObject retObj = goodsService.queryPageRecieveItems(baseEntity, recieveItemsEty);
+        return retObj.toString();
+    }
+
+
+    @RequestMapping("queryInstore.sdo")
+    public
+    @ResponseBody
+    String queryInstore(BaseEntity baseEntity, InstoreEty instoreEty, HttpServletRequest request) throws Exception {
+        JSONObject retObj = goodsService.queryPageInstores(baseEntity, instoreEty);
+        return retObj.toString();
+    }
+
+    @RequestMapping("queryInstoreItems.sdo")
+    public
+    @ResponseBody
+    String queryInstoreItems(BaseEntity baseEntity, InstoreItemsEty itemsEty, HttpServletRequest request) throws Exception {
+        JSONObject retObj = goodsService.queryPageInstoreItems(baseEntity, itemsEty);
+        return retObj.toString();
+    }
+
+
+    @RequestMapping("queryWareHouseGoods.sdo")
+    public
+    @ResponseBody
+    String queryInstoreItems(BaseEntity baseEntity, WareHousesGoodsEty wareHousesGoodsEty, HttpServletRequest request) throws Exception {
+        List ls = goodsService.queryWareHouseGoods(wareHousesGoodsEty);
+        JSONObject jsonObject = JSONGrid.toJSon(ls);
+        return jsonObject.toString();
+
+    }
+
+    @RequestMapping("queryBrands.sdo")
+    public
+    @ResponseBody
+    String queryBrands(BaseEntity baseEntity, HttpServletRequest request) throws Exception {
+        List ls = goodsService.queryBrands();
+        JSONObject jsonObject = JSONGrid.toJSon(ls);
+        return jsonObject.toString();
+    }
+
+    @RequestMapping("queryModels.sdo")
+    public
+    @ResponseBody
+    String queryModels(BaseEntity baseEntity, HttpServletRequest request) throws Exception {
+        List ls = goodsService.queryModels();
+        JSONObject jsonObject = JSONGrid.toJSon(ls);
+        return jsonObject.toString();
+    }
+    @RequestMapping("queryGoodsUnits.sdo")
+    public
+    @ResponseBody
+    String queryGoodsUnits(BaseEntity baseEntity, HttpServletRequest request) throws Exception {
+        List ls = goodsService.queryGoodsUnits();
+        JSONObject jsonObject = JSONGrid.toJSon(ls);
+        return jsonObject.toString();
+    }
+
+    @RequestMapping("querySuppliers.sdo")
+    public
+    @ResponseBody
+    String querySuppliers(BaseEntity baseEntity, SuppliersEty suppliersEty, HttpServletRequest request) throws Exception {
+        List<SuppliersEty> ls = goodsService.querySuppliers(suppliersEty);
+        JSONObject jsonObject = JSONGrid.toJSon(ls);
+        return jsonObject.toString();
     }
 
     @RequestMapping(value = "saveRecieveInfo.sdo", method = RequestMethod.POST)
     public @ResponseBody
-    String saveRecieveInfo(HttpServletRequest request, HttpServletResponse response, RecieveInfo recieveInfo) throws Exception {
+    String saveRecieveInfo(HttpServletRequest request, HttpServletResponse response, RecieveEty recieveInfo) throws Exception {
         String result = goodsService.saveRecieveInfo(request, recieveInfo);
         return result;
     }
@@ -64,7 +124,7 @@ public class GoodsController extends BaseController {
 
     @RequestMapping(value = "saveRecieveItems.sdo", method = RequestMethod.POST)
     public @ResponseBody
-    String saveRecieveItems(HttpServletRequest request, HttpServletResponse response, RecieveItems recieveItems) throws Exception {
+    String saveRecieveItems(HttpServletRequest request, HttpServletResponse response, RecieveItemsEty recieveItems) throws Exception {
         String result = goodsService.saveRecieveItems(request, recieveItems);
         return result;
     }

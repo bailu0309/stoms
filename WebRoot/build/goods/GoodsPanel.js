@@ -1,4 +1,4 @@
-Ext.define('build.goods.RecieveInfoPanel', {
+Ext.define('build.goods.GoodsPanel', {
     extend: 'Ext.panel.Panel',
     callBack: null,
     width: 600,
@@ -41,21 +41,21 @@ Ext.define('build.goods.RecieveInfoPanel', {
                 layout: 'column',
                 bodyStyle: 'padding:5px',
                 defaults: {columnWidth: .5, labelWidth: 70, labelAlign: 'right', width: '95%'},
-                items: [me.fid, me.recname, me.rectime]
+                items: [me.fid, me.recid, me.recname, me.rectime]
             }, {
                 columnWidth: 1,
                 border: false,
                 layout: 'column',
                 bodyStyle: 'padding:5px',
                 defaults: {columnWidth: .5, labelWidth: 70, labelAlign: 'right', width: '95%'},
-                items: [me.outnum, me.auditname]
+                items: [me.outnum, me.auditid, me.auditname]
             }, {
                 columnWidth: 1,
                 border: false,
                 layout: 'column',
                 bodyStyle: 'padding:5px',
                 defaults: {columnWidth: .5, labelWidth: 70, labelAlign: 'right', width: '95%'},
-                items: [me.outperson, me.outtype]
+                items: [me.outid, me.outname, me.outtype]
             }, {
                 columnWidth: 1,
                 border: false,
@@ -106,7 +106,79 @@ Ext.define('build.goods.RecieveInfoPanel', {
                 reader: {type: 'json', totalProperty: 'total', rootProperty: 'invdata'}
             }
         });
-
+        this.userStore = Ext.create('Ext.data.JsonStore', {
+            model: 'Model',
+            autoLoad: true,
+            pageSize: 25,
+            proxy: {
+                type: 'ajax',
+                actionMethods: {
+                    read: 'POST'
+                },
+                url: globalCtx + '/basic/UserController/listmain.sdo',
+                reader: {type: 'json', totalProperty: 'total', rootProperty: 'invdata'}
+            }
+        });
+        this.brandStore = Ext.create('Ext.data.JsonStore', {
+            model: 'Model',
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                actionMethods: {
+                    read: 'POST'
+                },
+                url: globalCtx + '/GoodsController/queryBrands.sdo',
+                reader: {type: 'json', totalProperty: 'total', rootProperty: 'invdata'}
+            }
+        });
+        this.typeStore = Ext.create('Ext.data.JsonStore', {
+            model: 'Model',
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                actionMethods: {
+                    read: 'POST'
+                },
+                url: globalCtx + '/GoodsController/queryGoodsTypes.sdo',
+                reader: {type: 'json', totalProperty: 'total', rootProperty: 'invdata'}
+            }
+        });
+        this.unitsStore = Ext.create('Ext.data.JsonStore', {
+            model: 'Model',
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                actionMethods: {
+                    read: 'POST'
+                },
+                url: globalCtx + '/GoodsController/queryGoodsUnits.sdo',
+                reader: {type: 'json', totalProperty: 'total', rootProperty: 'invdata'}
+            }
+        });
+        this.modelStore = Ext.create('Ext.data.JsonStore', {
+            model: 'Model',
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                actionMethods: {
+                    read: 'POST'
+                },
+                url: globalCtx + '/GoodsController/queryModels.sdo',
+                reader: {type: 'json', totalProperty: 'total', rootProperty: 'invdata'}
+            }
+        });
+        this.supplierStore = Ext.create('Ext.data.JsonStore', {
+            model: 'Model',
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                actionMethods: {
+                    read: 'POST'
+                },
+                url: globalCtx + '/GoodsController/querySuppliers.sdo',
+                reader: {type: 'json', totalProperty: 'total', rootProperty: 'invdata'}
+            }
+        });
     },
     initPartsInfo: function () {
         var me = this;
@@ -114,65 +186,82 @@ Ext.define('build.goods.RecieveInfoPanel', {
             name: 'id',
             hidden: true
         });
-        me.recname = Ext.create('Ext.form.field.Text', {
-            fieldLabel: '领用人',
-            name: 'recname'
+
+        me.name = Ext.create('Ext.form.field.Text', {
+            fieldLabel: '名称',
+            name: 'name'
         });
-        me.auditname = Ext.create('Ext.form.field.Text', {
-            fieldLabel: '审批人',
-            name: 'auditname'
+        me.code = Ext.create('Ext.form.field.Text', {
+            fieldLabel: '编码',
+            name: 'code'
         });
-        me.outperson = Ext.create('Ext.form.field.Text', {
-            fieldLabel: '出库人',
-            name: 'outperson'
+        me.brand = Ext.create('Ext.form.field.ComboBox', {
+            fieldLabel: '品牌',
+            name: 'brand',
+            store: this.brandStore,
+            queryMode: 'local',
+            editable: true,
+            anyMatch: true,
+            displayField: 'brand',
+            valueField: 'brand'
         });
-        me.outnum = Ext.create('Ext.form.field.Text', {
-            fieldLabel: '出库单号',
-            name: 'outnum'
+        me.model = Ext.create('Ext.form.field.ComboBox', {
+            fieldLabel: '型号',
+            name: 'model',
+            store: this.modelStore,
+            queryMode: 'local',
+            editable: true,
+            anyMatch: true,
+            displayField: 'model',
+            valueField: 'model'
         });
-        me.rectime = Ext.create('build.ux.DateTimeField', {
-            value: new Date(),
-            name: 'rectime',
-            format: 'Y-m-d H:i:s',
-            submitFormat: 'Y-m-d H:i:s',
-            fieldLabel: '领用时间',
+        me.units = Ext.create('Ext.form.field.ComboBox', {
+            fieldLabel: '单位',
+            name: 'units',
+            store: this.unitsStore,
+            queryMode: 'local',
+            editable: true,
+            anyMatch: true,
+            displayField: 'units',
+            valueField: 'units'
+        });
+        me.type = Ext.create('Ext.form.field.ComboBox', {
+            fieldLabel: '类型',
+            name: 'type',
+            store: this.typeStore,
+            queryMode: 'local',
+            editable: true,
+            anyMatch: true,
+            displayField: 'type',
+            valueField: 'type'
+        });
+        me.sid = Ext.create('Ext.form.field.ComboBox', {
+            fieldLabel: '供应商',
+            name: 'sid',
+            store: this.supplierStore,
+            queryMode: 'local',
+            editable: true,
+            anyMatch: true,
+            displayField: 'name',
+            valueField: 'id',
+            value: name,
             listeners: {
-                select: function (dateField, date) {
+                select: function (combo, record, index) {
+                    me.sname.setValue(record.get('name'));
+                    me.scode.setValue(record.get('code'));
                 }
             }
         });
-        me.outtype = Ext.create('Ext.form.ComboBox', {
-            fieldLabel: '领取类别',
-            editable: false,
-            name: 'outtype',
-            displayField: 'name',
-            valueField: 'value',
-            store: new Ext.data.ArrayStore({
-                fields: ['name', 'value'],
-                data: DICT_COMBO['outtype']
-            }),
-            queryMode: 'local',
-            typeAhead: true
-        });
-        me.outin = Ext.create('Ext.form.ComboBox', {
-            fieldLabel: '归还状态',
-            editable: false,
-            name: 'outin',
-            displayField: 'name',
-            valueField: 'value',
-            store: new Ext.data.ArrayStore({
-                fields: ['name', 'value'],
-                data: DICT_COMBO['outin']
-            }),
-            value: 0,
-            queryMode: 'local',
-            typeAhead: true
+        me.sname = Ext.create('Ext.form.field.Text', {
+            name: 'sname',
+            hidden: true
         });
 
-        me.purpose = Ext.create('Ext.form.field.TextArea', {
-            fieldLabel: '用途',
-            name: 'purpose'
+        me.scode = Ext.create('Ext.form.field.Text', {
+            name: 'scode',
+            hidden: true
         });
+
     },
     loadData: function (id, type) {
         var me = this;

@@ -1,4 +1,4 @@
-Ext.define('build.goods.RecieveInfoShowPanel', {
+Ext.define('build.goods.RecieveGridPanel', {
     extend: 'Ext.panel.Panel',
     requires: [
         'Ext.ux.ProgressBarPager',
@@ -9,7 +9,6 @@ Ext.define('build.goods.RecieveInfoShowPanel', {
     ],
     initComponent: function () {
         var me = this;
-        me.showType = 1;
         this.initStore();
         this.initColumn();
         this.initBigParts();
@@ -17,7 +16,10 @@ Ext.define('build.goods.RecieveInfoShowPanel', {
             layout: 'border',
             border: true,
             defaults: {split: true},
-            items: [me.queryPanel, this.gridPanel]
+            items: [me.queryPanel, {
+                layout: 'border',
+                items: [this.gridPanel, this.itemsPanel]
+            }]
         });
 
         this.callParent();
@@ -36,7 +38,7 @@ Ext.define('build.goods.RecieveInfoShowPanel', {
         });
         this.goodsname = Ext.create('Ext.form.field.Text', {
             fieldLabel: '领用物品',
-            name: 'goodsname',
+            name: 'qv',
             labelAlign: 'right'
         });
         this.sdate = Ext.create('Ext.form.field.Date', {
@@ -123,7 +125,6 @@ Ext.define('build.goods.RecieveInfoShowPanel', {
             region: 'center',
             dockedItems: [this.toolBar2],
             border: false,
-            selModel: new Ext.selection.CheckboxModel({mode: 'MULTI', allowDeselect: true}),//单选可反选
             columnLines: true,
             reserveScrollbar: true,
             viewConfig: {stripeRows: true},
@@ -131,10 +132,8 @@ Ext.define('build.goods.RecieveInfoShowPanel', {
             columns: this.columns,
             listeners: {
                 rowdblclick: function (ths, record, element, rowIndex, e, eOpts) {
-                    me.fid = record.get('fid');
-                    me.type = record.get('type');
-
-
+                    me.rid = record.get('id');
+                    me.searchItems();
                 }
             },
             bbar: {
@@ -145,9 +144,21 @@ Ext.define('build.goods.RecieveInfoShowPanel', {
                 plugins: new Ext.ux.ProgressBarPager()
             }
         });
+        this.itemsPanel = Ext.create('Ext.grid.Panel', {
+            mask: true,
+            height: '45%',
+            region: 'south',
+            border: false,
+            columnLines: true,
+            reserveScrollbar: true,
+            viewConfig: {stripeRows: true},
+            store: this.itemsstore,
+            columns: this.itemscolumns,
+            listeners: {}
+        });
 
 
-        me.reinfoPanel = Ext.create('build.goods.RecieveInfoPanel', {
+        me.reinfoPanel = Ext.create('build.goods.RecievePanel', {
             width: 600,
             height: 400,
             region: 'center',
@@ -187,7 +198,18 @@ Ext.define('build.goods.RecieveInfoShowPanel', {
             }
         });
 
-
+        this.itemsstore = Ext.create('Ext.data.JsonStore', {
+            model: 'Model',
+            pageSize: 25,
+            proxy: {
+                type: 'ajax',
+                actionMethods: {
+                    read: 'POST'
+                },
+                url: globalCtx + '/GoodsController/queryRecieveItems.sdo',
+                reader: {type: 'json', totalProperty: 'total', rootProperty: 'invdata'}
+            }
+        });
     },
     initColumn: function () {
         this.columns = [
@@ -205,6 +227,15 @@ Ext.define('build.goods.RecieveInfoShowPanel', {
                 text: '归还状态', width: 100, dataIndex: 'outin', dicttype: 'outin',
                 renderer: dictionaryRenderer
             }
+        ];
+
+        this.itemscolumns = [
+            {text: '仓库', width: 120, dataIndex: 'wname'},
+            {text: '商品名称', width: 180, dataIndex: 'gname'},
+            {text: '型号', width: 180, dataIndex: 'model'},
+            {text: '品牌', width: 180, dataIndex: 'brand'},
+            {text: '供应商', width: 200, dataIndex: 'sname'},
+            {text: '数量', width: 150, dataIndex: 'amount'}
         ]
     },
     del: function () {
@@ -260,6 +291,16 @@ Ext.define('build.goods.RecieveInfoShowPanel', {
         var params = me.queryPanel.getForm().getValues();
 
         Ext.apply(this.store.proxy.extraParams, params);
+
+        this.store.load();
+    },
+    searchItems: function () {
+        var me = this;
+        var params = {
+            rid: me.rid
+        };
+
+        Ext.apply(this.itemsstore.proxy.extraParams, params);
 
         this.store.load();
     },

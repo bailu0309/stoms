@@ -97,7 +97,7 @@
 	        resultType="com.creating.dao.mapper.entity.basic.UserEty">
 		SELECT u.id, u.name, (u.name || ' ' || u.username) username
 		from M_USER u
-		where u.mtype = '1'
+		where 1=1
 		<if test="username != null  and username != ''">AND username like '%${username}%'</if>
 	</select>
 
@@ -139,8 +139,7 @@
 	</select>
 
 	<select id="selectUserByName" parameterType="String" resultType="com.creating.dao.mapper.entity.basic.UserEty">
-		SELECT
-			t.*
+		SELECT t.*
 		FROM M_USER t
 		WHERE t.name = #{name}
 	</select>

@@ -33,8 +33,42 @@
 			<property name="enableSubPackages" value="false"/>
 		</javaClientGenerator>
 
-
 		<!--<table schema="storage" tableName="t_goods" domainObjectName="goods.GoodsEty"
+		       enableInsert="true"
+		       enableSelectByPrimaryKey="true"
+		       enableUpdateByPrimaryKey="true"
+		       enableDeleteByPrimaryKey="true"
+		       enableCountByExample="false"
+		       enableDeleteByExample="false"
+		       enableSelectByExample="false"
+		       enableUpdateByExample="false"/>-->
+		<!--
+
+		<table schema="storage" tableName="t_suppliers" domainObjectName="goods.SuppliersEty"
+		       enableInsert="true"
+		       enableSelectByPrimaryKey="true"
+		       enableUpdateByPrimaryKey="true"
+		       enableDeleteByPrimaryKey="true"
+		       enableCountByExample="false"
+		       enableDeleteByExample="false"
+		       enableSelectByExample="false"
+		       enableUpdateByExample="false"/>
+
+
+
+		<table schema="storage" tableName="t_warehouses" domainObjectName="goods.WareHousesEty"
+		       enableInsert="true"
+		       enableSelectByPrimaryKey="true"
+		       enableUpdateByPrimaryKey="true"
+		       enableDeleteByPrimaryKey="true"
+		       enableCountByExample="false"
+		       enableDeleteByExample="false"
+		       enableSelectByExample="false"
+		       enableUpdateByExample="false"/>
+-->
+<!--
+
+		<table schema="storage" tableName="t_warehouses_goods" domainObjectName="goods.WareHousesGoodsEty"
 		       enableInsert="true"
 		       enableSelectByPrimaryKey="true"
 		       enableUpdateByPrimaryKey="true"
@@ -45,7 +79,8 @@
 		       enableUpdateByExample="false"/>-->
 
 
-		<table schema="storage" tableName="t_recieve_info" domainObjectName="goods.RecieveInfo"
+
+		<!--<table schema="storage" tableName="t_recieve" domainObjectName="goods.RecieveEty"
 		       enableInsert="true"
 		       enableSelectByPrimaryKey="true"
 		       enableUpdateByPrimaryKey="true"
@@ -56,7 +91,7 @@
 		       enableUpdateByExample="false"/>
 
 
-		<table schema="storage" tableName="t_recieve_items" domainObjectName="goods.RecieveItems"
+		<table schema="storage" tableName="t_recieve_items" domainObjectName="goods.RecieveItemsEty"
 		       enableInsert="true"
 		       enableSelectByPrimaryKey="true"
 		       enableUpdateByPrimaryKey="true"
@@ -65,5 +100,31 @@
 		       enableDeleteByExample="false"
 		       enableSelectByExample="false"
 		       enableUpdateByExample="false"/>
+
+
+
+
+
+		<table schema="storage" tableName="t_instore_items" domainObjectName="goods.InstoreItemsEty"
+		       enableInsert="true"
+		       enableSelectByPrimaryKey="true"
+		       enableUpdateByPrimaryKey="true"
+		       enableDeleteByPrimaryKey="true"
+		       enableCountByExample="false"
+		       enableDeleteByExample="false"
+		       enableSelectByExample="false"
+		       enableUpdateByExample="false"/>-->
+
+
+		<table schema="storage" tableName="t_instore" domainObjectName="goods.InstoreEty"
+		       enableInsert="true"
+		       enableSelectByPrimaryKey="true"
+		       enableUpdateByPrimaryKey="true"
+		       enableDeleteByPrimaryKey="true"
+		       enableCountByExample="false"
+		       enableDeleteByExample="false"
+		       enableSelectByExample="false"
+		       enableUpdateByExample="false"/>
+
 	</context>
 </generatorConfiguration>

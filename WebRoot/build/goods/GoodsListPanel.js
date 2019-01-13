@@ -17,7 +17,10 @@ Ext.define('build.goods.GoodsShowPanel', {
             layout: 'border',
             border: true,
             defaults: {split: true},
-            items: [me.queryPanel, this.gridPanel]
+            items: [me.queryPanel, {
+                layout: 'border',
+                items: [this.gridPanel, this.itemsPanel]
+            }]
         });
 
         me.search();
@@ -42,8 +45,14 @@ Ext.define('build.goods.GoodsShowPanel', {
             name: 'brand',
             labelAlign: 'right'
         });
-
-
+        me.sval = Ext.create('Ext.form.field.Number', {
+            name: 'sval',
+            fieldLabel: '库存量'
+        });
+        me.eval = Ext.create('Ext.form.field.Number', {
+            name: 'eval',
+            fieldLabel: '至'
+        });
         this.toolBar = Ext.create('Ext.toolbar.Toolbar', {
             items: ['->', {
                 xtype: 'button',
@@ -80,20 +89,26 @@ Ext.define('build.goods.GoodsShowPanel', {
             title: '查询条件',
             layout: 'column',
             region: 'west',
-            width: 360,
+            width: 300,
             defaults: {bodyStyle: 'padding:2px', border: false},
             items: [{
                 columnWidth: 1,
                 border: false,
                 layout: 'column',
-                defaults: {columnWidth: 1, labelWidth: 65, labelAlign: 'right', width: '100%'},
+                defaults: {columnWidth: 1, labelWidth: 60, labelAlign: 'right', width: '95%'},
                 items: [me.name]
             }, {
                 columnWidth: 1,
                 border: false,
                 layout: 'column',
-                defaults: {columnWidth: 1, labelWidth: 65, labelAlign: 'right', width: '100%'},
+                defaults: {columnWidth: 1, labelWidth: 60, labelAlign: 'right', width: '95%'},
                 items: [me.brand]
+            }, {
+                columnWidth: 1,
+                border: false,
+                layout: 'column',
+                defaults: {columnWidth: .5, labelWidth: 60, labelAlign: 'right', width: '95%'},
+                items: [me.sval, me.eval]
             }]
         });
         this.gridPanel = Ext.create('Ext.grid.Panel', {
@@ -110,8 +125,6 @@ Ext.define('build.goods.GoodsShowPanel', {
                 rowdblclick: function (ths, record, element, rowIndex, e, eOpts) {
                     me.fid = record.get('fid');
                     me.type = record.get('type');
-
-
                 }
             },
             bbar: {
@@ -122,13 +135,23 @@ Ext.define('build.goods.GoodsShowPanel', {
                 plugins: new Ext.ux.ProgressBarPager()
             }
         });
-
+        this.itemsPanel = Ext.create('Ext.grid.Panel', {
+            mask: true,
+            height: '45%',
+            region: 'south',
+            border: false,
+            columnLines: true,
+            reserveScrollbar: true,
+            viewConfig: {stripeRows: true},
+            store: this.itemsstore,
+            columns: this.itemscolumns,
+            listeners: {}
+        })
 
     },
     initStore: function () {
         this.store = Ext.create('Ext.data.JsonStore', {
             model: 'Model',
-            // autoLoad: true,
             pageSize: 25,
             proxy: {
                 type: 'ajax',
@@ -140,27 +163,32 @@ Ext.define('build.goods.GoodsShowPanel', {
             }
         });
 
-
+        this.itemsstore = Ext.create('Ext.data.JsonStore', {
+            model: 'Model',
+            proxy: {
+                type: 'ajax',
+                actionMethods: {
+                    read: 'POST'
+                },
+                url: globalCtx + '/GoodsController/queryWareHouseGoods.sdo',
+                reader: {type: 'json', totalProperty: 'total', rootProperty: 'invdata'}
+            }
+        });
     },
     initColumn: function () {
         this.columns = [
             {text: '商品名称', width: 200, dataIndex: 'name', cellWrap: true, renderer: breakRenderers},
             {text: '品牌', width: 100, dataIndex: 'brand', cellWrap: true, renderer: breakRenderers},
             {text: '规格型号', width: 200, dataIndex: 'model', cellWrap: true, renderer: breakRenderers},
-            {text: '总数量', width: 100, dataIndex: 'counts'},
+            {text: '总数量', width: 100, dataIndex: 'amount'},
             {text: '单位', width: 150, dataIndex: 'unit'},
             {text: '类别', width: 100, dataIndex: 'type'},
             {text: '供应商', width: 200, dataIndex: 'supplier'},
-            {text: '备注', width: 200, dataIndex: 'remark', cellWrap: true, renderer: breakRenderers},
-            {text: '库1数', width: 100, dataIndex: 'num1'},
-            {text: '库2数', width: 100, dataIndex: 'num2'},
-            {text: '库3数', width: 100, dataIndex: 'num3'},
-            {text: '库4数', width: 100, dataIndex: 'num4'},
-            {text: '库5数', width: 100, dataIndex: 'num5'},
-            {text: '库6数', width: 100, dataIndex: 'num6'},
-            {text: '库7数', width: 100, dataIndex: 'num7'},
-            {text: '库8数', width: 100, dataIndex: 'num8'},
-            {text: '库9数', width: 100, dataIndex: 'num9'}
+            {text: '备注', width: 200, dataIndex: 'remark', cellWrap: true, renderer: breakRenderers}
+        ];
+        this.itemscolumns = [
+            {text: '仓库名称', width: 200, dataIndex: 'name', cellWrap: true, renderer: breakRenderers},
+            {text: '库存量', width: 100, dataIndex: 'amount'}
         ]
     },
     upload: function () {

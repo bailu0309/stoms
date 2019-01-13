@@ -11,6 +11,33 @@ public class BaseEntity {
     private String edate;
     private String startdate;
     private String enddate;
+    private Integer sval;
+    private Integer eval;
+    private String qv;
+
+    public String getQv() {
+        return qv;
+    }
+
+    public void setQv(String qv) {
+        this.qv = qv;
+    }
+
+    public Integer getSval() {
+        return sval;
+    }
+
+    public void setSval(Integer sval) {
+        this.sval = sval;
+    }
+
+    public Integer getEval() {
+        return eval;
+    }
+
+    public void setEval(Integer eval) {
+        this.eval = eval;
+    }
 
     public String getStartdate() {
         return startdate;

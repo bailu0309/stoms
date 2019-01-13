@@ -1,7 +1,6 @@
 package com.creating.dao.mapper.goods;
 
 import com.creating.dao.mapper.entity.goods.GoodsEty;
-import com.creating.dao.mapper.entity.goods.RecieveItems;
 
 import java.util.List;
 
@@ -18,7 +17,15 @@ public interface GoodsEtyMapper {
 
     int updateByPrimaryKey(GoodsEty record);
 
+    void minusGoods(GoodsEty goodsEty);
+
     List<GoodsEty> queryGoods(GoodsEty goodsEty);
 
-    void minusGoods(RecieveItems items);
+    List queryBrands();
+
+    List queryModels();
+
+    List queryGoodsUnits();
+    List queryGoodsTypes();
+
 }

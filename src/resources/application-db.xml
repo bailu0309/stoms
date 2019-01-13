@@ -32,9 +32,12 @@
         <!--<property name="url" value="jdbc:mysql://192.168.1.114:3308/nqc?characterEncoding=UTF-8&amp;serverTimezone=CTT"/>-->
         <!--<property name="url" value="jdbc:mysql://123.206.178.191:3306/nqc?characterEncoding=UTF-8&amp;serverTimezone=CTT"/>-->
         <!--<property name="url" value="jdbc:mysql://192.168.2.225:3306/nqc?characterEncoding=UTF-8&amp;serverTimezone=CTT"/>-->
-        <property name="url" value="jdbc:mysql://123.206.178.191:3306/storage?characterEncoding=UTF-8&amp;serverTimezone=CTT"/>
-        <property name="username" value="bailu"/>
-        <property name="password" value="Creating!@#123"/>
+        <!--<property name="url" value="jdbc:mysql://123.206.178.191:3306/storage?characterEncoding=UTF-8&amp;serverTimezone=CTT"/>-->
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/storage?characterEncoding=UTF-8&amp;serverTimezone=CTT"/>
+        <!--<property name="username" value="bailu"/>-->
+        <property name="username" value="root"/>
+        <!--<property name="password" value="Creating!@#123"/>-->
+        <property name="password" value="root"/>
         <property name="initialSize" value="1"/>
         <property name="minIdle" value="1"/>
         <property name="maxActive" value="200"/>

@@ -50,4 +50,12 @@ public class ResultInfo {
     public void setId(String id) {
         this.id = id;
     }
+
+    public static ResultInfo ok() {
+        ResultInfo resultInfo = new ResultInfo();
+        resultInfo.setSuccess(true);
+        return resultInfo;
+
+    }
+
 }

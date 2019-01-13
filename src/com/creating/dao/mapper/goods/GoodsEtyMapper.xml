@@ -4,43 +4,20 @@
 	<resultMap id="BaseResultMap" type="com.creating.dao.mapper.entity.goods.GoodsEty">
 		<id column="id" jdbcType="INTEGER" property="id"/>
 		<result column="name" jdbcType="VARCHAR" property="name"/>
+		<result column="code" jdbcType="VARCHAR" property="code"/>
 		<result column="brand" jdbcType="VARCHAR" property="brand"/>
 		<result column="model" jdbcType="VARCHAR" property="model"/>
-		<result column="counts" jdbcType="REAL" property="counts"/>
-		<result column="unit" jdbcType="VARCHAR" property="unit"/>
+		<result column="amount" jdbcType="REAL" property="amount"/>
+		<result column="units" jdbcType="VARCHAR" property="units"/>
 		<result column="type" jdbcType="VARCHAR" property="type"/>
-		<result column="supplier" jdbcType="VARCHAR" property="supplier"/>
+		<result column="sid" jdbcType="INTEGER" property="sid"/>
+		<result column="scode" jdbcType="VARCHAR" property="scode"/>
+		<result column="sname" jdbcType="VARCHAR" property="sname"/>
 		<result column="remark" jdbcType="VARCHAR" property="remark"/>
-		<result column="post1" jdbcType="VARCHAR" property="post1"/>
-		<result column="num1" jdbcType="REAL" property="num1"/>
-		<result column="post2" jdbcType="VARCHAR" property="post2"/>
-		<result column="num2" jdbcType="REAL" property="num2"/>
-		<result column="post3" jdbcType="VARCHAR" property="post3"/>
-		<result column="num3" jdbcType="REAL" property="num3"/>
-		<result column="post4" jdbcType="VARCHAR" property="post4"/>
-		<result column="num4" jdbcType="REAL" property="num4"/>
-		<result column="post5" jdbcType="VARCHAR" property="post5"/>
-		<result column="num5" jdbcType="REAL" property="num5"/>
-		<result column="num6" jdbcType="REAL" property="num6"/>
-		<result column="num7" jdbcType="REAL" property="num7"/>
-		<result column="num8" jdbcType="REAL" property="num8"/>
-		<result column="num9" jdbcType="REAL" property="num9"/>
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, name, brand, model, counts, unit, type, supplier, remark, post1, num1, post2,
-		num2, post3, num3, post4, num4, post5, num5, num6, num7, num8, num9
+		id, name, code, brand, model, amount, units, type, sid, scode, sname, remark
 	</sql>
-	<select id="queryGoods" parameterType="com.creating.dao.mapper.entity.goods.GoodsEty"
-	        resultType="com.creating.dao.mapper.entity.goods.GoodsEty">
-		select
-		<include refid="Base_Column_List"/>
-		from t_goods
-		<where>
-			<if test="name != null and name != ''">name like '%${name}%'</if>
-			<if test="brand != null and brand != ''">brand like '%${brand}%'</if>
-		</where>
-	</select>
-
 	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List"/>
@@ -52,25 +29,15 @@
 		WHERE id = #{id,jdbcType=INTEGER}
 	</delete>
 	<insert id="insert" parameterType="com.creating.dao.mapper.entity.goods.GoodsEty">
-		INSERT INTO t_goods (id, name, brand,
-		                     model, counts, unit, type,
-		                     supplier, remark, post1,
-		                     num1, post2, num2, post3,
-		                     num3, post4, num4, post5,
-		                     num5, num6, num7, num8,
-		                     num9)
-		VALUES (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR},
-		                                #{model,jdbcType=VARCHAR}, #{counts,jdbcType=REAL}, #{unit,jdbcType=VARCHAR},
-		                                #{type,jdbcType=VARCHAR},
-		                                #{supplier,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
-		                                #{post1,jdbcType=VARCHAR},
-		                                #{num1,jdbcType=REAL}, #{post2,jdbcType=VARCHAR}, #{num2,jdbcType=REAL},
-		                                                       #{post3,jdbcType=VARCHAR},
-		                                                       #{num3,jdbcType=REAL}, #{post4,jdbcType=VARCHAR},
-		                                                       #{num4,jdbcType=REAL}, #{post5,jdbcType=VARCHAR},
-		                                                       #{num5,jdbcType=REAL}, #{num6,jdbcType=REAL},
-		                                                       #{num7,jdbcType=REAL}, #{num8,jdbcType=REAL},
-		        #{num9,jdbcType=REAL})
+		INSERT INTO t_goods (id, name, code,
+		                     brand, model, amount,
+		                     units, type, sid, scode,
+		                     sname, remark)
+		VALUES (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+		                                #{brand,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, #{amount,jdbcType=REAL},
+		                                #{units,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{sid,jdbcType=INTEGER},
+		                                #{scode,jdbcType=VARCHAR},
+		                                #{sname,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
 	</insert>
 	<insert id="insertSelective" parameterType="com.creating.dao.mapper.entity.goods.GoodsEty">
 		insert into t_goods
@@ -81,68 +48,35 @@
 			<if test="name != null">
 				name,
 			</if>
+			<if test="code != null">
+				code,
+			</if>
 			<if test="brand != null">
 				brand,
 			</if>
 			<if test="model != null">
 				model,
 			</if>
-			<if test="counts != null">
-				counts,
+			<if test="amount != null">
+				amount,
 			</if>
-			<if test="unit != null">
-				unit,
+			<if test="units != null">
+				units,
 			</if>
 			<if test="type != null">
 				type,
 			</if>
-			<if test="supplier != null">
-				supplier,
+			<if test="sid != null">
+				sid,
+			</if>
+			<if test="scode != null">
+				scode,
+			</if>
+			<if test="sname != null">
+				sname,
 			</if>
 			<if test="remark != null">
 				remark,
-			</if>
-			<if test="post1 != null">
-				post1,
-			</if>
-			<if test="num1 != null">
-				num1,
-			</if>
-			<if test="post2 != null">
-				post2,
-			</if>
-			<if test="num2 != null">
-				num2,
-			</if>
-			<if test="post3 != null">
-				post3,
-			</if>
-			<if test="num3 != null">
-				num3,
-			</if>
-			<if test="post4 != null">
-				post4,
-			</if>
-			<if test="num4 != null">
-				num4,
-			</if>
-			<if test="post5 != null">
-				post5,
-			</if>
-			<if test="num5 != null">
-				num5,
-			</if>
-			<if test="num6 != null">
-				num6,
-			</if>
-			<if test="num7 != null">
-				num7,
-			</if>
-			<if test="num8 != null">
-				num8,
-			</if>
-			<if test="num9 != null">
-				num9,
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -152,68 +86,35 @@
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
 			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
 			<if test="brand != null">
 				#{brand,jdbcType=VARCHAR},
 			</if>
 			<if test="model != null">
 				#{model,jdbcType=VARCHAR},
 			</if>
-			<if test="counts != null">
-				#{counts,jdbcType=REAL},
+			<if test="amount != null">
+				#{amount,jdbcType=REAL},
 			</if>
-			<if test="unit != null">
-				#{unit,jdbcType=VARCHAR},
+			<if test="units != null">
+				#{units,jdbcType=VARCHAR},
 			</if>
 			<if test="type != null">
 				#{type,jdbcType=VARCHAR},
 			</if>
-			<if test="supplier != null">
-				#{supplier,jdbcType=VARCHAR},
+			<if test="sid != null">
+				#{sid,jdbcType=INTEGER},
+			</if>
+			<if test="scode != null">
+				#{scode,jdbcType=VARCHAR},
+			</if>
+			<if test="sname != null">
+				#{sname,jdbcType=VARCHAR},
 			</if>
 			<if test="remark != null">
 				#{remark,jdbcType=VARCHAR},
-			</if>
-			<if test="post1 != null">
-				#{post1,jdbcType=VARCHAR},
-			</if>
-			<if test="num1 != null">
-				#{num1,jdbcType=REAL},
-			</if>
-			<if test="post2 != null">
-				#{post2,jdbcType=VARCHAR},
-			</if>
-			<if test="num2 != null">
-				#{num2,jdbcType=REAL},
-			</if>
-			<if test="post3 != null">
-				#{post3,jdbcType=VARCHAR},
-			</if>
-			<if test="num3 != null">
-				#{num3,jdbcType=REAL},
-			</if>
-			<if test="post4 != null">
-				#{post4,jdbcType=VARCHAR},
-			</if>
-			<if test="num4 != null">
-				#{num4,jdbcType=REAL},
-			</if>
-			<if test="post5 != null">
-				#{post5,jdbcType=VARCHAR},
-			</if>
-			<if test="num5 != null">
-				#{num5,jdbcType=REAL},
-			</if>
-			<if test="num6 != null">
-				#{num6,jdbcType=REAL},
-			</if>
-			<if test="num7 != null">
-				#{num7,jdbcType=REAL},
-			</if>
-			<if test="num8 != null">
-				#{num8,jdbcType=REAL},
-			</if>
-			<if test="num9 != null">
-				#{num9,jdbcType=REAL},
 			</if>
 		</trim>
 	</insert>
@@ -223,135 +124,130 @@
 			<if test="name != null">
 				name = #{name,jdbcType=VARCHAR},
 			</if>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
 			<if test="brand != null">
 				brand = #{brand,jdbcType=VARCHAR},
 			</if>
 			<if test="model != null">
 				model = #{model,jdbcType=VARCHAR},
 			</if>
-			<if test="counts != null">
-				counts = #{counts,jdbcType=REAL},
+			<if test="amount != null">
+				amount = #{amount,jdbcType=REAL},
 			</if>
-			<if test="unit != null">
-				unit = #{unit,jdbcType=VARCHAR},
+			<if test="units != null">
+				units = #{units,jdbcType=VARCHAR},
 			</if>
 			<if test="type != null">
 				type = #{type,jdbcType=VARCHAR},
 			</if>
-			<if test="supplier != null">
-				supplier = #{supplier,jdbcType=VARCHAR},
+			<if test="sid != null">
+				sid = #{sid,jdbcType=INTEGER},
+			</if>
+			<if test="scode != null">
+				scode = #{scode,jdbcType=VARCHAR},
+			</if>
+			<if test="sname != null">
+				sname = #{sname,jdbcType=VARCHAR},
 			</if>
 			<if test="remark != null">
 				remark = #{remark,jdbcType=VARCHAR},
-			</if>
-			<if test="post1 != null">
-				post1 = #{post1,jdbcType=VARCHAR},
-			</if>
-			<if test="num1 != null">
-				num1 = #{num1,jdbcType=REAL},
-			</if>
-			<if test="post2 != null">
-				post2 = #{post2,jdbcType=VARCHAR},
-			</if>
-			<if test="num2 != null">
-				num2 = #{num2,jdbcType=REAL},
-			</if>
-			<if test="post3 != null">
-				post3 = #{post3,jdbcType=VARCHAR},
-			</if>
-			<if test="num3 != null">
-				num3 = #{num3,jdbcType=REAL},
-			</if>
-			<if test="post4 != null">
-				post4 = #{post4,jdbcType=VARCHAR},
-			</if>
-			<if test="num4 != null">
-				num4 = #{num4,jdbcType=REAL},
-			</if>
-			<if test="post5 != null">
-				post5 = #{post5,jdbcType=VARCHAR},
-			</if>
-			<if test="num5 != null">
-				num5 = #{num5,jdbcType=REAL},
-			</if>
-			<if test="num6 != null">
-				num6 = #{num6,jdbcType=REAL},
-			</if>
-			<if test="num7 != null">
-				num7 = #{num7,jdbcType=REAL},
-			</if>
-			<if test="num8 != null">
-				num8 = #{num8,jdbcType=REAL},
-			</if>
-			<if test="num9 != null">
-				num9 = #{num9,jdbcType=REAL},
 			</if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.creating.dao.mapper.entity.goods.GoodsEty">
 		UPDATE t_goods
-		SET name     = #{name,jdbcType=VARCHAR},
-			brand    = #{brand,jdbcType=VARCHAR},
-			model    = #{model,jdbcType=VARCHAR},
-			counts   = #{counts,jdbcType=REAL},
-			unit     = #{unit,jdbcType=VARCHAR},
-			type     = #{type,jdbcType=VARCHAR},
-			supplier = #{supplier,jdbcType=VARCHAR},
-			remark   = #{remark,jdbcType=VARCHAR},
-			post1    = #{post1,jdbcType=VARCHAR},
-			num1     = #{num1,jdbcType=REAL},
-			post2    = #{post2,jdbcType=VARCHAR},
-			num2     = #{num2,jdbcType=REAL},
-			post3    = #{post3,jdbcType=VARCHAR},
-			num3     = #{num3,jdbcType=REAL},
-			post4    = #{post4,jdbcType=VARCHAR},
-			num4     = #{num4,jdbcType=REAL},
-			post5    = #{post5,jdbcType=VARCHAR},
-			num5     = #{num5,jdbcType=REAL},
-			num6     = #{num6,jdbcType=REAL},
-			num7     = #{num7,jdbcType=REAL},
-			num8     = #{num8,jdbcType=REAL},
-			num9     = #{num9,jdbcType=REAL}
+		SET name   = #{name,jdbcType=VARCHAR},
+			code   = #{code,jdbcType=VARCHAR},
+			brand  = #{brand,jdbcType=VARCHAR},
+			model  = #{model,jdbcType=VARCHAR},
+			amount = #{amount,jdbcType=REAL},
+			units  = #{units,jdbcType=VARCHAR},
+			type   = #{type,jdbcType=VARCHAR},
+			sid    = #{sid,jdbcType=INTEGER},
+			scode  = #{scode,jdbcType=VARCHAR},
+			sname  = #{sname,jdbcType=VARCHAR},
+			remark = #{remark,jdbcType=VARCHAR}
 		WHERE id = #{id,jdbcType=INTEGER}
 	</update>
-	<update id="minusGoods" parameterType="com.creating.dao.mapper.entity.goods.RecieveItems">
-		update t_goods
-		<set>
-			<if test="nums != null and nums != ''">
-				counts = counts - #{nums},
-			</if>
-			<if test="n1 != null and n1 != ''">
-				num1 = num1 - #{n1},
-			</if>
-			<if test="n2 != null and n2 != ''">
-				num2 = num2 - #{n2},
-			</if>
-			<if test="n3 != null and n3 != ''">
-				num3 = num3 - #{n3},
-			</if>
-			<if test="n4 != null and n4 != ''">
-				num4 = num4 - #{n4},
-			</if>
-			<if test="n5 != null and n5 != ''">
-				num5 = num5 - #{n5},
-			</if>
-			<if test="n6 != null and n6 != ''">
-				num6 = num6 - #{n6},
-			</if>
-			<if test="n7 != null and n7 != ''">
-				num7 = num7 - #{n7},
-			</if>
-			<if test="n8 != null and n8 != ''">
-				num8 = num8 - #{n8},
-			</if>
-			<if test="n9 != null and n9 != ''">
-				num9 = num9 - #{n9},
-			</if>
-		</set>
-		<where>
-			id = #{gid}
-		</where>
 
+	<select id="queryGoods" parameterType="com.creating.dao.mapper.entity.goods.GoodsEty"
+	        resultType="com.creating.dao.mapper.entity.goods.GoodsEty">
+		select * from t_goods
+		<where>
+			<if test="name != null">
+				and name like '%${name}%'
+			</if>
+			<if test="code != null">
+				and code like '%${code}%'
+			</if>
+			<if test="brand != null">
+				and brand like '%${brand}%'
+			</if>
+			<if test="model != null">
+				and model like '%${model}%'
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="sid != null">
+				and sid = #{sid}
+			</if>
+			<if test="scode != null">
+				scode like '%${scode}%'
+			</if>
+			<if test="sname != null">
+				sname like '%${sname}%'
+			</if>
+			<if test="sval != null">
+				and amount >= #{sval}
+			</if>
+			<if test="eval != null">
+				and #{eval} >= amount
+			</if>
+		</where>
+	</select>
+	<select id="queryBrands">
+		SELECT brand
+		FROM
+			t_goods
+		WHERE
+			brand IS NOT NULL
+		GROUP BY
+			brand
+	</select>
+	<select id="queryModels">
+		SELECT model
+		FROM
+			t_goods
+		WHERE
+			model IS NOT NULL
+		GROUP BY
+			model
+	</select>
+	<select id="queryGoodsUnits">
+		SELECT units
+		FROM
+			t_goods
+		WHERE
+			units IS NOT NULL
+		GROUP BY
+			units
+	</select>
+	<select id="queryGoodsTypes">
+		SELECT type
+		FROM
+			t_goods
+		WHERE
+			type IS NOT NULL
+		GROUP BY
+			type
+	</select>
+	<update id="minusGoods" parameterType="com.creating.dao.mapper.entity.goods.GoodsEty">
+		UPDATE t_goods
+		SET amount = (amount - #{amount})
+		WHERE id = #{id}
 	</update>
 </mapper>
