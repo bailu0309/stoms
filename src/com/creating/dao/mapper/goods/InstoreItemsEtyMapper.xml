@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.creating.dao.mapper.goods.InstoreItemsEtyMapper">
+	<resultMap id="BaseResultMap" type="com.creating.dao.mapper.entity.goods.InstoreItemsEty">
+		<id column="id" jdbcType="INTEGER" property="id"/>
+		<result column="inid" jdbcType="INTEGER" property="inid"/>
+		<result column="incode" jdbcType="VARCHAR" property="incode"/>
+		<result column="inname" jdbcType="VARCHAR" property="inname"/>
+		<result column="wid" jdbcType="INTEGER" property="wid"/>
+		<result column="wcode" jdbcType="VARCHAR" property="wcode"/>
+		<result column="wname" jdbcType="VARCHAR" property="wname"/>
+		<result column="gid" jdbcType="INTEGER" property="gid"/>
+		<result column="gcode" jdbcType="VARCHAR" property="gcode"/>
+		<result column="gname" jdbcType="VARCHAR" property="gname"/>
+		<result column="sid" jdbcType="INTEGER" property="sid"/>
+		<result column="scode" jdbcType="VARCHAR" property="scode"/>
+		<result column="sname" jdbcType="VARCHAR" property="sname"/>
+		<result column="amount" jdbcType="REAL" property="amount"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, inid, incode, inname, wid, wcode, wname, gid, gcode, gname, sid, scode, sname,
+		amount
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from t_instore_items
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="queryInstoreItems" resultType="com.creating.dao.mapper.entity.goods.InstoreItemsEty"
+	        parameterType="com.creating.dao.mapper.entity.goods.InstoreItemsEty">
+		SELECT * FROM t_instore_items t
+		<where>
+			<if test="inid != null">
+				and inid = #{inid}
+			</if>
+			<if test="incode != null">
+				and incode like '%${incode}%'
+			</if>
+			<if test="inname != null">
+				and inname like '%${inname}%'
+			</if>
+			<if test="wid != null">
+				and wid = #{wid}
+			</if>
+			<if test="wcode != null">
+				and wcode like '%${wcode}%'
+			</if>
+			<if test="wname != null">
+				and wname like '%${wname}%'
+			</if>
+			<if test="gid != null">
+				and gid = #{gid}
+			</if>
+			<if test="gcode != null">
+				and gcode like '%${gcode}%'
+			</if>
+			<if test="gname != null">
+				and gname like '%${gname}%'
+			</if>
+			<if test="sval != null">
+				and amount >= #{sval}
+			</if>
+			<if test="eval != null">
+				and #{eval} >= amount
+			</if>
+		</where>
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		DELETE FROM t_instore_items
+		WHERE id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.creating.dao.mapper.entity.goods.InstoreItemsEty">
+		INSERT INTO t_instore_items (id, inid, incode,
+		                             inname, wid, wcode,
+		                             wname, gid, gcode,
+		                             gname, sid, scode,
+		                             sname, amount)
+		VALUES (#{id,jdbcType=INTEGER}, #{inid,jdbcType=INTEGER}, #{incode,jdbcType=VARCHAR},
+		                                #{inname,jdbcType=VARCHAR}, #{wid,jdbcType=INTEGER}, #{wcode,jdbcType=VARCHAR},
+		                                #{wname,jdbcType=VARCHAR}, #{gid,jdbcType=INTEGER}, #{gcode,jdbcType=VARCHAR},
+		                                #{gname,jdbcType=VARCHAR}, #{sid,jdbcType=INTEGER}, #{scode,jdbcType=VARCHAR},
+		        #{sname,jdbcType=VARCHAR}, #{amount,jdbcType=REAL})
+	</insert>
+	<insert id="insertSelective" parameterType="com.creating.dao.mapper.entity.goods.InstoreItemsEty">
+		insert into t_instore_items
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="inid != null">
+				inid,
+			</if>
+			<if test="incode != null">
+				incode,
+			</if>
+			<if test="inname != null">
+				inname,
+			</if>
+			<if test="wid != null">
+				wid,
+			</if>
+			<if test="wcode != null">
+				wcode,
+			</if>
+			<if test="wname != null">
+				wname,
+			</if>
+			<if test="gid != null">
+				gid,
+			</if>
+			<if test="gcode != null">
+				gcode,
+			</if>
+			<if test="gname != null">
+				gname,
+			</if>
+			<if test="sid != null">
+				sid,
+			</if>
+			<if test="scode != null">
+				scode,
+			</if>
+			<if test="sname != null">
+				sname,
+			</if>
+			<if test="amount != null">
+				amount,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="inid != null">
+				#{inid,jdbcType=INTEGER},
+			</if>
+			<if test="incode != null">
+				#{incode,jdbcType=VARCHAR},
+			</if>
+			<if test="inname != null">
+				#{inname,jdbcType=VARCHAR},
+			</if>
+			<if test="wid != null">
+				#{wid,jdbcType=INTEGER},
+			</if>
+			<if test="wcode != null">
+				#{wcode,jdbcType=VARCHAR},
+			</if>
+			<if test="wname != null">
+				#{wname,jdbcType=VARCHAR},
+			</if>
+			<if test="gid != null">
+				#{gid,jdbcType=INTEGER},
+			</if>
+			<if test="gcode != null">
+				#{gcode,jdbcType=VARCHAR},
+			</if>
+			<if test="gname != null">
+				#{gname,jdbcType=VARCHAR},
+			</if>
+			<if test="sid != null">
+				#{sid,jdbcType=INTEGER},
+			</if>
+			<if test="scode != null">
+				#{scode,jdbcType=VARCHAR},
+			</if>
+			<if test="sname != null">
+				#{sname,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=REAL},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.creating.dao.mapper.entity.goods.InstoreItemsEty">
+		update t_instore_items
+		<set>
+			<if test="inid != null">
+				inid = #{inid,jdbcType=INTEGER},
+			</if>
+			<if test="incode != null">
+				incode = #{incode,jdbcType=VARCHAR},
+			</if>
+			<if test="inname != null">
+				inname = #{inname,jdbcType=VARCHAR},
+			</if>
+			<if test="wid != null">
+				wid = #{wid,jdbcType=INTEGER},
+			</if>
+			<if test="wcode != null">
+				wcode = #{wcode,jdbcType=VARCHAR},
+			</if>
+			<if test="wname != null">
+				wname = #{wname,jdbcType=VARCHAR},
+			</if>
+			<if test="gid != null">
+				gid = #{gid,jdbcType=INTEGER},
+			</if>
+			<if test="gcode != null">
+				gcode = #{gcode,jdbcType=VARCHAR},
+			</if>
+			<if test="gname != null">
+				gname = #{gname,jdbcType=VARCHAR},
+			</if>
+			<if test="sid != null">
+				sid = #{sid,jdbcType=INTEGER},
+			</if>
+			<if test="scode != null">
+				scode = #{scode,jdbcType=VARCHAR},
+			</if>
+			<if test="sname != null">
+				sname = #{sname,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				amount = #{amount,jdbcType=REAL},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.creating.dao.mapper.entity.goods.InstoreItemsEty">
+		UPDATE t_instore_items
+		SET inid   = #{inid,jdbcType=INTEGER},
+			incode = #{incode,jdbcType=VARCHAR},
+			inname = #{inname,jdbcType=VARCHAR},
+			wid    = #{wid,jdbcType=INTEGER},
+			wcode  = #{wcode,jdbcType=VARCHAR},
+			wname  = #{wname,jdbcType=VARCHAR},
+			gid    = #{gid,jdbcType=INTEGER},
+			gcode  = #{gcode,jdbcType=VARCHAR},
+			gname  = #{gname,jdbcType=VARCHAR},
+			sid    = #{sid,jdbcType=INTEGER},
+			scode  = #{scode,jdbcType=VARCHAR},
+			sname  = #{sname,jdbcType=VARCHAR},
+			amount = #{amount,jdbcType=REAL}
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

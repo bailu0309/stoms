@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.creating.dao.mapper.goods.RecieveEtyMapper">
+	<resultMap id="BaseResultMap" type="com.creating.dao.mapper.entity.goods.RecieveEty">
+		<id column="id" jdbcType="INTEGER" property="id"/>
+		<result column="name" jdbcType="VARCHAR" property="name"/>
+		<result column="recid" jdbcType="VARCHAR" property="recid"/>
+		<result column="recname" jdbcType="VARCHAR" property="recname"/>
+		<result column="rectime" jdbcType="TIMESTAMP" property="rectime"/>
+		<result column="outnumber" jdbcType="VARCHAR" property="outnumber"/>
+		<result column="auditid" jdbcType="VARCHAR" property="auditid"/>
+		<result column="auditname" jdbcType="VARCHAR" property="auditname"/>
+		<result column="outid" jdbcType="VARCHAR" property="outid"/>
+		<result column="outname" jdbcType="VARCHAR" property="outname"/>
+		<result column="purpose" jdbcType="VARCHAR" property="purpose"/>
+		<result column="outtype" jdbcType="VARCHAR" property="outtype"/>
+		<result column="outin" jdbcType="VARCHAR" property="outin"/>
+		<result column="remark" jdbcType="VARCHAR" property="remark"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, recid, recname, rectime, outnumber, auditid, auditname, outid, outname,
+		purpose, outtype, outin, remark
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from t_recieve
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="queryRecieves" resultType="com.creating.dao.mapper.entity.goods.RecieveEty"
+	        parameterType="com.creating.dao.mapper.entity.goods.RecieveEty">
+		select t.* from t_recieve t LEFT JOIN t_recieve_items i on t.id = i.rid
+		<where>
+			<if test="qv != null">
+				and (i.gname like '%{qv}%' or i.gcode like '%{qv}%')
+			</if>
+			<if test="name != null">
+				and t.name like '%{name}%'
+			</if>
+			<if test="recid != null">
+				and t.recid = #{recid}
+			</if>
+			<if test="recname != null">
+				and t.recname like '%{recname}%'
+			</if>
+			<if test="sdate!=null and sdate!=''">
+				and t.rectime >= str_to_date('${sdate} 00:00:00','%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="edate!=null and edate!=''">
+				and str_to_date('${edate} 23:59:59', '%Y-%m-%d %H:%i:%s') >= t.rectime
+			</if>
+			<if test="outnumber != null">
+				and t.outnumber like '%{outnumber}%'
+			</if>
+			<if test="auditid != null">
+				and t.auditid = #{auditid}
+			</if>
+			<if test="auditname != null">
+				and t.auditname like '%{auditname}%'
+			</if>
+			<if test="outid != null">
+				and t.outid = #{outid}
+			</if>
+			<if test="outname != null">
+				and t.outname like '%{outname}%'
+			</if>
+			<if test="purpose != null">
+				and t.purpose like '%{purpose}%'
+			</if>
+			<if test="outtype != null">
+				and t.outtype = #{outtype}
+			</if>
+			<if test="outin != null">
+				and t.outin = #{outin}
+			</if>
+			<if test="remark != null">
+				and t.remark like '%{remark}%'
+			</if>
+		</where>
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		DELETE FROM t_recieve
+		WHERE id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.creating.dao.mapper.entity.goods.RecieveEty">
+		INSERT INTO t_recieve (id, name, recid,
+		                       recname, rectime, outnumber,
+		                       auditid, auditname, outid,
+		                       outname, purpose, outtype,
+		                       outin, remark)
+		VALUES (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{recid,jdbcType=VARCHAR},
+		                                #{recname,jdbcType=VARCHAR}, #{rectime,jdbcType=TIMESTAMP},
+		                                #{outnumber,jdbcType=VARCHAR},
+		                                #{auditid,jdbcType=VARCHAR}, #{auditname,jdbcType=VARCHAR},
+		                                #{outid,jdbcType=VARCHAR},
+		                                #{outname,jdbcType=VARCHAR}, #{purpose,jdbcType=VARCHAR},
+		        #{outtype,jdbcType=VARCHAR},
+		        #{outin,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.creating.dao.mapper.entity.goods.RecieveEty">
+		insert into t_recieve
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="recid != null">
+				recid,
+			</if>
+			<if test="recname != null">
+				recname,
+			</if>
+			<if test="rectime != null">
+				rectime,
+			</if>
+			<if test="outnumber != null">
+				outnumber,
+			</if>
+			<if test="auditid != null">
+				auditid,
+			</if>
+			<if test="auditname != null">
+				auditname,
+			</if>
+			<if test="outid != null">
+				outid,
+			</if>
+			<if test="outname != null">
+				outname,
+			</if>
+			<if test="purpose != null">
+				purpose,
+			</if>
+			<if test="outtype != null">
+				outtype,
+			</if>
+			<if test="outin != null">
+				outin,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="recid != null">
+				#{recid,jdbcType=VARCHAR},
+			</if>
+			<if test="recname != null">
+				#{recname,jdbcType=VARCHAR},
+			</if>
+			<if test="rectime != null">
+				#{rectime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="outnumber != null">
+				#{outnumber,jdbcType=VARCHAR},
+			</if>
+			<if test="auditid != null">
+				#{auditid,jdbcType=VARCHAR},
+			</if>
+			<if test="auditname != null">
+				#{auditname,jdbcType=VARCHAR},
+			</if>
+			<if test="outid != null">
+				#{outid,jdbcType=VARCHAR},
+			</if>
+			<if test="outname != null">
+				#{outname,jdbcType=VARCHAR},
+			</if>
+			<if test="purpose != null">
+				#{purpose,jdbcType=VARCHAR},
+			</if>
+			<if test="outtype != null">
+				#{outtype,jdbcType=VARCHAR},
+			</if>
+			<if test="outin != null">
+				#{outin,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.creating.dao.mapper.entity.goods.RecieveEty">
+		update t_recieve
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="recid != null">
+				recid = #{recid,jdbcType=VARCHAR},
+			</if>
+			<if test="recname != null">
+				recname = #{recname,jdbcType=VARCHAR},
+			</if>
+			<if test="rectime != null">
+				rectime = #{rectime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="outnumber != null">
+				outnumber = #{outnumber,jdbcType=VARCHAR},
+			</if>
+			<if test="auditid != null">
+				auditid = #{auditid,jdbcType=VARCHAR},
+			</if>
+			<if test="auditname != null">
+				auditname = #{auditname,jdbcType=VARCHAR},
+			</if>
+			<if test="outid != null">
+				outid = #{outid,jdbcType=VARCHAR},
+			</if>
+			<if test="outname != null">
+				outname = #{outname,jdbcType=VARCHAR},
+			</if>
+			<if test="purpose != null">
+				purpose = #{purpose,jdbcType=VARCHAR},
+			</if>
+			<if test="outtype != null">
+				outtype = #{outtype,jdbcType=VARCHAR},
+			</if>
+			<if test="outin != null">
+				outin = #{outin,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.creating.dao.mapper.entity.goods.RecieveEty">
+		UPDATE t_recieve
+		SET name      = #{name,jdbcType=VARCHAR},
+			recid     = #{recid,jdbcType=VARCHAR},
+			recname   = #{recname,jdbcType=VARCHAR},
+			rectime   = #{rectime,jdbcType=TIMESTAMP},
+			outnumber = #{outnumber,jdbcType=VARCHAR},
+			auditid   = #{auditid,jdbcType=VARCHAR},
+			auditname = #{auditname,jdbcType=VARCHAR},
+			outid     = #{outid,jdbcType=VARCHAR},
+			outname   = #{outname,jdbcType=VARCHAR},
+			purpose   = #{purpose,jdbcType=VARCHAR},
+			outtype   = #{outtype,jdbcType=VARCHAR},
+			outin     = #{outin,jdbcType=VARCHAR},
+			remark    = #{remark,jdbcType=VARCHAR}
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

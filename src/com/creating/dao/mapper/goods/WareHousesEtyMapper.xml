@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.creating.dao.mapper.goods.WareHousesEtyMapper">
+	<resultMap id="BaseResultMap" type="com.creating.dao.mapper.entity.goods.WareHousesEty">
+		<id column="id" jdbcType="INTEGER" property="id"/>
+		<result column="name" jdbcType="VARCHAR" property="name"/>
+		<result column="code" jdbcType="VARCHAR" property="code"/>
+		<result column="position" jdbcType="VARCHAR" property="position"/>
+		<result column="remark" jdbcType="VARCHAR" property="remark"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, code, position, remark
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from t_warehouses
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="queryWareHouses" resultType="com.creating.dao.mapper.entity.goods.WareHousesEty"
+	        parameterType="com.creating.dao.mapper.entity.goods.WareHousesEty">
+		SELECT *
+		FROM t_warehouses t
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		DELETE FROM t_warehouses
+		WHERE id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.creating.dao.mapper.entity.goods.WareHousesEty">
+		INSERT INTO t_warehouses (id, name, code,
+		                          position, remark)
+		VALUES (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+		        #{position,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.creating.dao.mapper.entity.goods.WareHousesEty">
+		insert into t_warehouses
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="position != null">
+				position,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="position != null">
+				#{position,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.creating.dao.mapper.entity.goods.WareHousesEty">
+		update t_warehouses
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="position != null">
+				position = #{position,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.creating.dao.mapper.entity.goods.WareHousesEty">
+		UPDATE t_warehouses
+		SET name     = #{name,jdbcType=VARCHAR},
+			code     = #{code,jdbcType=VARCHAR},
+			position = #{position,jdbcType=VARCHAR},
+			remark   = #{remark,jdbcType=VARCHAR}
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>
