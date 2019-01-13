@@ -178,7 +178,7 @@
 		select * from t_goods
 		<where>
 			<if test="name != null">
-				and name like '%${name}%'
+				and (name like '%${name}%' or brand like '%${name}%' or model like '%${name}%')
 			</if>
 			<if test="code != null">
 				and code like '%${code}%'
@@ -209,7 +209,7 @@
 			</if>
 		</where>
 	</select>
-	<select id="queryBrands">
+	<select id="queryBrands" resultType="map">
 		SELECT brand
 		FROM
 			t_goods
@@ -218,7 +218,7 @@
 		GROUP BY
 			brand
 	</select>
-	<select id="queryModels">
+	<select id="queryModels" resultType="map">
 		SELECT model
 		FROM
 			t_goods
@@ -227,7 +227,7 @@
 		GROUP BY
 			model
 	</select>
-	<select id="queryGoodsUnits">
+	<select id="queryGoodsUnits" resultType="map">
 		SELECT units
 		FROM
 			t_goods
@@ -236,7 +236,7 @@
 		GROUP BY
 			units
 	</select>
-	<select id="queryGoodsTypes">
+	<select id="queryGoodsTypes" resultType="map">
 		SELECT type
 		FROM
 			t_goods

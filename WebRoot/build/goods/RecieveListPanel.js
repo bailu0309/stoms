@@ -73,7 +73,14 @@ Ext.define('build.goods.RecieveGridPanel', {
         });
         this.toolBar2 = Ext.create('Ext.toolbar.Toolbar', {
             items: [{
-                text: '新增',
+                text: '新增出货单',
+                iconCls: 'add',
+                scope: this,
+                handler: function () {
+                    me.reinfoShowWin.show();
+                }
+            },{
+                text: '新增出货物',
                 iconCls: 'add',
                 scope: this,
                 handler: function () {
@@ -235,7 +242,7 @@ Ext.define('build.goods.RecieveGridPanel', {
             {text: '型号', width: 180, dataIndex: 'model'},
             {text: '品牌', width: 180, dataIndex: 'brand'},
             {text: '供应商', width: 200, dataIndex: 'sname'},
-            {text: '数量', width: 150, dataIndex: 'amount'}
+            {text: '领用数量', width: 150, dataIndex: 'amount'}
         ]
     },
     del: function () {

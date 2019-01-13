@@ -3,6 +3,7 @@ package com.creating.dao.mapper.goods;
 import com.creating.dao.mapper.entity.goods.GoodsEty;
 
 import java.util.List;
+import java.util.Map;
 
 public interface GoodsEtyMapper {
     int deleteByPrimaryKey(Integer id);
@@ -21,11 +22,12 @@ public interface GoodsEtyMapper {
 
     List<GoodsEty> queryGoods(GoodsEty goodsEty);
 
-    List queryBrands();
+    List<Map> queryBrands();
 
-    List queryModels();
+    List<Map> queryModels();
 
-    List queryGoodsUnits();
-    List queryGoodsTypes();
+    List<Map> queryGoodsUnits();
+
+    List<Map> queryGoodsTypes();
 
 }

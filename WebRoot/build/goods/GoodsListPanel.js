@@ -35,14 +35,8 @@ Ext.define('build.goods.GoodsShowPanel', {
 
 
         this.name = Ext.create('Ext.form.field.Text', {
-            fieldLabel: '名称',
+            fieldLabel: '商品信息',
             name: 'name',
-            labelAlign: 'right'
-        });
-
-        this.brand = Ext.create('Ext.form.field.Text', {
-            fieldLabel: '品牌',
-            name: 'brand',
             labelAlign: 'right'
         });
         me.sval = Ext.create('Ext.form.field.Number', {
