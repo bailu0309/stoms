@@ -34,6 +34,16 @@ public class GoodsController extends BaseController {
         return retObj.toString();
     }
 
+    @RequestMapping("queryAllGoods.sdo")
+    public
+    @ResponseBody
+    String queryAllGoods(BaseEntity baseEntity, GoodsEty goods, HttpServletRequest request) throws Exception {
+        List ls = goodsService.queryGoods(goods);
+        JSONObject jsonObject = JSONGrid.toJSon(ls);
+        return jsonObject.toString();
+    }
+
+
     @RequestMapping("queryRecieveInfo.sdo")
     public
     @ResponseBody
@@ -46,7 +56,7 @@ public class GoodsController extends BaseController {
     @RequestMapping("queryRecieveItems.sdo")
     public
     @ResponseBody
-    String queryRecieveInfo(BaseEntity baseEntity, RecieveItemsEty recieveItemsEty, HttpServletRequest request) throws Exception {
+    String queryRecieveItems(BaseEntity baseEntity, RecieveItemsEty recieveItemsEty, HttpServletRequest request) throws Exception {
         JSONObject retObj = goodsService.queryPageRecieveItems(baseEntity, recieveItemsEty);
         return retObj.toString();
     }
@@ -72,12 +82,23 @@ public class GoodsController extends BaseController {
     @RequestMapping("queryWareHouseGoods.sdo")
     public
     @ResponseBody
-    String queryInstoreItems(BaseEntity baseEntity, WareHousesGoodsEty wareHousesGoodsEty, HttpServletRequest request) throws Exception {
+    String queryWareHouseGoods(BaseEntity baseEntity, WareHousesGoodsEty wareHousesGoodsEty, HttpServletRequest request) throws Exception {
         List ls = goodsService.queryWareHouseGoods(wareHousesGoodsEty);
+        JSONObject jsonObject = JSONGrid.toJSon(ls);
+        return jsonObject.toString();
+    }
+
+
+    @RequestMapping("queryWareHouses.sdo")
+    public
+    @ResponseBody
+    String queryWareHouse(BaseEntity baseEntity, WareHousesEty wareHousesEty, HttpServletRequest request) throws Exception {
+        List ls = goodsService.queryWareHouses(wareHousesEty);
         JSONObject jsonObject = JSONGrid.toJSon(ls);
         return jsonObject.toString();
 
     }
+
 
     @RequestMapping("queryBrands.sdo")
     public
@@ -96,6 +117,7 @@ public class GoodsController extends BaseController {
         JSONObject jsonObject = JSONGrid.toJSon(ls);
         return jsonObject.toString();
     }
+
     @RequestMapping("queryGoodsUnits.sdo")
     public
     @ResponseBody

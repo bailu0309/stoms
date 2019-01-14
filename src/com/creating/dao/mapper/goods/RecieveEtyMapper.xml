@@ -29,19 +29,19 @@
 	</select>
 	<select id="queryRecieves" resultType="com.creating.dao.mapper.entity.goods.RecieveEty"
 	        parameterType="com.creating.dao.mapper.entity.goods.RecieveEty">
-		select t.* from t_recieve t LEFT JOIN t_recieve_items i on t.id = i.rid
+		select t.* from t_recieve t
 		<where>
-			<if test="qv != null">
-				and (i.gname like '%{qv}%' or i.gcode like '%{qv}%')
+			<if test="qv != null and qv != ''">
+				and t.id in (select rid from t_recieve_items i where (i.gname like '%${qv}%' or i.gcode like '%${qv}%'))
 			</if>
 			<if test="name != null">
-				and t.name like '%{name}%'
+				and t.name like '%${name}%'
 			</if>
 			<if test="recid != null">
 				and t.recid = #{recid}
 			</if>
-			<if test="recname != null">
-				and t.recname like '%{recname}%'
+			<if test="recname != null and recname != ''">
+				and t.recname like '%${recname}%'
 			</if>
 			<if test="sdate!=null and sdate!=''">
 				and t.rectime >= str_to_date('${sdate} 00:00:00','%Y-%m-%d %H:%i:%s')
@@ -50,22 +50,22 @@
 				and str_to_date('${edate} 23:59:59', '%Y-%m-%d %H:%i:%s') >= t.rectime
 			</if>
 			<if test="outnumber != null">
-				and t.outnumber like '%{outnumber}%'
+				and t.outnumber like '%${outnumber}%'
 			</if>
 			<if test="auditid != null">
 				and t.auditid = #{auditid}
 			</if>
 			<if test="auditname != null">
-				and t.auditname like '%{auditname}%'
+				and t.auditname like '%${auditname}%'
 			</if>
 			<if test="outid != null">
 				and t.outid = #{outid}
 			</if>
 			<if test="outname != null">
-				and t.outname like '%{outname}%'
+				and t.outname like '%${outname}%'
 			</if>
 			<if test="purpose != null">
-				and t.purpose like '%{purpose}%'
+				and t.purpose like '%${purpose}%'
 			</if>
 			<if test="outtype != null">
 				and t.outtype = #{outtype}
@@ -74,15 +74,17 @@
 				and t.outin = #{outin}
 			</if>
 			<if test="remark != null">
-				and t.remark like '%{remark}%'
+				and t.remark like '%${remark}%'
 			</if>
 		</where>
+		order by rectime desc
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		DELETE FROM t_recieve
 		WHERE id = #{id,jdbcType=INTEGER}
 	</delete>
-	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.creating.dao.mapper.entity.goods.RecieveEty">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"
+	        parameterType="com.creating.dao.mapper.entity.goods.RecieveEty">
 		INSERT INTO t_recieve (id, name, recid,
 		                       recname, rectime, outnumber,
 		                       auditid, auditname, outid,

@@ -21,6 +21,8 @@
 	        parameterType="com.creating.dao.mapper.entity.goods.WareHousesEty">
 		SELECT *
 		FROM t_warehouses t
+		<where>
+		</where>
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		DELETE FROM t_warehouses

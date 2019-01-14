@@ -1,4 +1,4 @@
-Ext.define('build.goods.RecievePanel', {
+Ext.define('build.goods.RecieveItemsPanel', {
     extend: 'Ext.panel.Panel',
     callBack: null,
     width: 600,
@@ -40,36 +40,29 @@ Ext.define('build.goods.RecievePanel', {
                 border: false,
                 layout: 'column',
                 bodyStyle: 'padding:5px',
-                defaults: {columnWidth: .5, labelWidth: 70, labelAlign: 'right', width: '95%'},
-                items: [me.fid, me.name, me.outnumber]
-            }, {
-                columnWidth: 1,
-                border: false,
-                layout: 'column',
-                bodyStyle: 'padding:5px',
-                defaults: {columnWidth: .5, labelWidth: 70, labelAlign: 'right', width: '95%'},
-                items: [me.recid, me.recname, me.rectime]
-            }, {
-                columnWidth: 1,
-                border: false,
-                layout: 'column',
-                bodyStyle: 'padding:5px',
-                defaults: {columnWidth: .5, labelWidth: 70, labelAlign: 'right', width: '95%'},
-                items: [me.auditid, me.auditname, me.outid, me.outname]
-            }, {
-                columnWidth: 1,
-                border: false,
-                layout: 'column',
-                bodyStyle: 'padding:5px',
-                defaults: {columnWidth: .5, labelWidth: 70, labelAlign: 'right', width: '95%'},
-                items: [me.outtype, me.outin]
+                defaults: {columnWidth: 1, labelWidth: 70, labelAlign: 'right', width: '95%'},
+                items: [me.fid, me.gid, me.gname, me.gcode]
             }, {
                 columnWidth: 1,
                 border: false,
                 layout: 'column',
                 bodyStyle: 'padding:5px',
                 defaults: {columnWidth: 1, labelWidth: 70, labelAlign: 'right', width: '95%'},
-                items: [me.purpose]
+                items: [me.wid, me.wcode, me.wname]
+            }, {
+                columnWidth: 1,
+                border: false,
+                layout: 'column',
+                bodyStyle: 'padding:5px',
+                defaults: {columnWidth: 1, labelWidth: 70, labelAlign: 'right', width: '95%'},
+                items: [me.sid, me.scode, me.sname]
+            }, {
+                columnWidth: 1,
+                border: false,
+                layout: 'column',
+                bodyStyle: 'padding:5px',
+                defaults: {columnWidth: .5, labelWidth: 70, labelAlign: 'right', width: '95%'},
+                items: [me.allamount, me.amount]
             }]
         });
 
@@ -79,7 +72,6 @@ Ext.define('build.goods.RecievePanel', {
             scope: this,
             handler: me.save
         });
-
 
         me.viewPanel = new Ext.Panel({
             border: true,
@@ -95,18 +87,21 @@ Ext.define('build.goods.RecievePanel', {
         var me = this;
     },
     initStore: function () {
-        this.store = Ext.create('Ext.data.JsonStore', {
+
+        this.userStore = Ext.create('Ext.data.JsonStore', {
             model: 'Model',
+            autoLoad: true,
+            pageSize: 25,
             proxy: {
                 type: 'ajax',
                 actionMethods: {
                     read: 'POST'
                 },
-                url: globalCtx + '/AdverBaseController/queryAdverBaseById.sdo',
+                url: globalCtx + '/basic/UserController/listmain.sdo',
                 reader: {type: 'json', totalProperty: 'total', rootProperty: 'invdata'}
             }
         });
-        this.userStore = Ext.create('Ext.data.JsonStore', {
+        this.goodStore = Ext.create('Ext.data.JsonStore', {
             model: 'Model',
             autoLoad: true,
             proxy: {
@@ -114,10 +109,34 @@ Ext.define('build.goods.RecievePanel', {
                 actionMethods: {
                     read: 'POST'
                 },
-                url: globalCtx + '/basic/UserController/queryUsers.sdo',
+                url: globalCtx + '/GoodsController/queryAllGoods.sdo',
                 reader: {type: 'json', totalProperty: 'total', rootProperty: 'invdata'}
             }
-        })
+        });
+        this.wareHouseGoodStore = Ext.create('Ext.data.JsonStore', {
+            model: 'Model',
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                actionMethods: {
+                    read: 'POST'
+                },
+                url: globalCtx + '/GoodsController/queryWareHouseGoods.sdo',
+                reader: {type: 'json', totalProperty: 'total', rootProperty: 'invdata'}
+            }
+        });
+        this.supplierStore = Ext.create('Ext.data.JsonStore', {
+            model: 'Model',
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                actionMethods: {
+                    read: 'POST'
+                },
+                url: globalCtx + '/GoodsController/querySuppliers.sdo',
+                reader: {type: 'json', totalProperty: 'total', rootProperty: 'invdata'}
+            }
+        });
     },
     initPartsInfo: function () {
         var me = this;
@@ -125,117 +144,101 @@ Ext.define('build.goods.RecievePanel', {
             name: 'id',
             hidden: true
         });
-        me.recid = Ext.create('Ext.form.field.ComboBox', {
-                fieldLabel: '领用人',
-                name: 'recid',
-                store: this.userStore,
+        me.gid = Ext.create('Ext.form.field.ComboBox', {
+                fieldLabel: '物品',
+                name: 'gid',
+                store: this.goodStore,
                 queryMode: 'local',
                 editable: true,
                 anyMatch: true,
-                displayField: 'username',
-                valueField: 'name',
+                displayField: 'text',
+                valueField: 'id',
                 listeners: {
                     select: function (combo, record, index) {
-                        me.recname.setValue(record.get('username'));
+                        me.gname.setValue(record.get('name'));
+                        me.gcode.setValue(record.get('code'));
+                        me.sid.setValue(record.get('sid'));
+                        me.searchWareHouse(record.get('id'))
                     }
                 }
             }
         );
-        me.recname = Ext.create('Ext.form.field.Text', {
-            name: 'recname',
+        me.gname = Ext.create('Ext.form.field.Text', {
+            name: 'gname',
             hidden: true
         });
-        me.auditid = Ext.create('Ext.form.field.ComboBox', {
-            fieldLabel: '审批人',
-            name: 'auditid',
-            store: this.userStore,
+        me.gcode = Ext.create('Ext.form.field.Text', {
+            name: 'gcode',
+            hidden: true
+        });
+        me.sid = Ext.create('Ext.form.field.ComboBox', {
+            fieldLabel: '供应商',
+            name: 'sid',
+            store: this.supplierStore,
             queryMode: 'local',
             editable: true,
             anyMatch: true,
-            displayField: 'username',
-            valueField: 'name',
-            listeners: {
-                select: function (combo, record, index) {
-                    me.auditname.setValue(record.get('username'));
-                }
-            }
-        });
-        me.auditname = Ext.create('Ext.form.field.Text', {
-            name: 'auditname',
-            hidden: true
-        });
-        me.outid = Ext.create('Ext.form.field.ComboBox', {
-            fieldLabel: '出库人',
-            name: 'outid',
-            store: this.userStore,
-            queryMode: 'local',
-            editable: true,
-            anyMatch: true,
-            displayField: 'username',
-            valueField: 'name',
+            displayField: 'name',
+            valueField: 'id',
             value: name,
             listeners: {
                 select: function (combo, record, index) {
-                    me.outname.setValue(record.get('username'));
+                    me.sname.setValue(record.get('name'));
+                    me.scode.setValue(record.get('code'));
                 }
             }
         });
-        me.outname = Ext.create('Ext.form.field.Text', {
-            name: 'outname',
-            value: userName,
+        me.sname = Ext.create('Ext.form.field.Text', {
+            name: 'sname',
             hidden: true
         });
-        me.name = Ext.create('Ext.form.field.Text', {
-            fieldLabel: '出库名称',
-            name: 'name'
+
+        me.scode = Ext.create('Ext.form.field.Text', {
+            name: 'scode',
+            hidden: true
         });
-        me.outnumber = Ext.create('Ext.form.field.Text', {
-            fieldLabel: '出库单号',
-            name: 'outnumber'
+
+        me.wid = Ext.create('Ext.form.field.ComboBox', {
+                fieldLabel: '仓库',
+                name: 'wid',
+                store: this.wareHouseGoodStore,
+                queryMode: 'local',
+                editable: true,
+                anyMatch: true,
+                displayField: 'wname',
+                valueField: 'wid',
+                listeners: {
+                    select: function (combo, record, index) {
+                        me.wname.setValue(record.get('wname'));
+                        me.wcode.setValue(record.get('wcode'));
+                        me.allamount.setValue(record.get('amount'));
+                    }
+                }
+            }
+        );
+        me.wname = Ext.create('Ext.form.field.Text', {
+            name: 'wname',
+            hidden: true
         });
-        me.rectime = Ext.create('build.ux.DateTimeField', {
-            value: new Date(),
-            name: 'rectime',
-            format: 'Y-m-d H:i:s',
-            submitFormat: 'Y-m-d H:i:s',
-            fieldLabel: '领用时间',
+
+        me.wcode = Ext.create('Ext.form.field.Text', {
+            name: 'wcode',
+            hidden: true
+        });
+
+        me.allamount = Ext.create('Ext.form.field.Text', {
+            fieldLabel: '剩余量',
+            name: 'allamount',
             listeners: {
-                select: function (dateField, date) {
+                change: function (thiz, newValue, oldValue, eOpts) {
+                    me.amount.setMaxValue(newValue);
                 }
             }
         });
-        me.outtype = Ext.create('Ext.form.ComboBox', {
-            fieldLabel: '领取类别',
-            editable: false,
-            name: 'outtype',
-            displayField: 'name',
-            valueField: 'value',
-            store: new Ext.data.ArrayStore({
-                fields: ['name', 'value'],
-                data: DICT_COMBO['outtype']
-            }),
-            value: 1,
-            queryMode: 'local',
-            typeAhead: true
-        });
-        me.outin = Ext.create('Ext.form.ComboBox', {
-            fieldLabel: '归还状态',
-            editable: false,
-            name: 'outin',
-            displayField: 'name',
-            valueField: 'value',
-            store: new Ext.data.ArrayStore({
-                fields: ['name', 'value'],
-                data: DICT_COMBO['outin']
-            }),
-            value: 0,
-            queryMode: 'local',
-            typeAhead: true
-        });
 
-        me.purpose = Ext.create('Ext.form.field.TextArea', {
-            fieldLabel: '用途',
-            name: 'purpose'
+        me.amount = Ext.create('Ext.form.field.Number', {
+            name: 'amount',
+            fieldLabel: '出库量'
         });
     },
     loadData: function (id, type) {
@@ -274,7 +277,7 @@ Ext.define('build.goods.RecievePanel', {
                     return;
                 }
                 me.formPanel.getForm().submit({
-                    url: globalCtx + '/GoodsController/saveRecieveInfo.sdo',
+                    url: globalCtx + '/GoodsController/saveRecieveItems.sdo',
                     method: 'POST',
                     submitEmptyText: false,
                     waitMsg: '正在保存,请稍候...',
@@ -286,7 +289,6 @@ Ext.define('build.goods.RecievePanel', {
                             if (me.callBack) {
                                 me.callBack();
                             }
-                            me.formPanel.getForm().reset();
                             App.getApplication().msg('提示', '保存成功！', 2000);
                         } else {
                             me.saveBtn.setDisabled(false);
@@ -337,6 +339,17 @@ Ext.define('build.goods.RecievePanel', {
                 }
             })
         });
+    },
+    searchWareHouse: function (gid) {
+        var me = this;
+
+        var params = {
+            gid: gid
+        };
+
+        Ext.apply(me.wareHouseGoodStore.proxy.extraParams, params);
+
+        this.wareHouseGoodStore.load();
     },
     exception: function () {
         App.getApplication().msg('出错', '后端未正确返回数据', 2000);

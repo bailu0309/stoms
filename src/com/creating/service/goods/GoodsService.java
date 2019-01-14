@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -45,7 +46,6 @@ public class GoodsService {
         Page<GoodsEty> page = (Page<GoodsEty>) goodsEtyMapper.queryGoods(goods);
         return JSONGrid.toJSon(page.getResult(), (int) page.getTotal(), DateUtils.datetimeFormat);
     }
-
 
     public List<GoodsEty> queryGoods(GoodsEty goods) throws Exception {
         return goodsEtyMapper.queryGoods(goods);
@@ -187,5 +187,6 @@ public class GoodsService {
     }
 
     public List queryGoodsUnits() {
-        return goodsEtyMapper.queryGoodsUnits();    }
+        return goodsEtyMapper.queryGoodsUnits();
+    }
 }

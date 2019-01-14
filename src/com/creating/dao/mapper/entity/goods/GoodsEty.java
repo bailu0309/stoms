@@ -27,6 +27,16 @@ public class GoodsEty extends BaseEntity {
 
     private String remark;
 
+    private String text;
+
+    public String getText() {
+        return this.name + " " + this.brand + " " + this.model;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public Integer getId() {
         return id;
     }

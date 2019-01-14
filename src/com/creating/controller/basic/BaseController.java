@@ -21,7 +21,7 @@ public class BaseController {
     @InitBinder
     public void initBibder(WebDataBinder binder) {
         binder.registerCustomEditor(Timestamp.class, new CustomDateEditor(DateUtils.datetimeFormat, true));
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(DateUtils.dateFormat, true));
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(DateUtils.datetimeFormat, true));
         binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
         binder.registerCustomEditor(Integer.class, null, new CustomNumberEditor(Integer.class, null, true));
         binder.registerCustomEditor(Long.class, null, new CustomNumberEditor(Long.class, null, true));

@@ -1,4 +1,4 @@
-Ext.define('build.goods.GoodsShowPanel', {
+Ext.define('build.goods.GoodsListPanel', {
     extend: 'Ext.panel.Panel',
     requires: [
         'Ext.ux.ProgressBarPager',
@@ -19,6 +19,7 @@ Ext.define('build.goods.GoodsShowPanel', {
             defaults: {split: true},
             items: [me.queryPanel, {
                 layout: 'border',
+                region: 'center',
                 items: [this.gridPanel, this.itemsPanel]
             }]
         });

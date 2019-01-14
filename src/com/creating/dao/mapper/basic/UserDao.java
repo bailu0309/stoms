@@ -52,4 +52,6 @@ public interface UserDao extends BaseDao<UserEty> {
     List<UserEty> queryQccByHospname(String s);
 
     UserEty queryProQcc();
+
+    List<UserEty> queryUsers(UserEty user);
 }

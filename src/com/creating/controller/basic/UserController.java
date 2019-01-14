@@ -79,6 +79,16 @@ public class UserController {
     }
 
 
+
+    @RequestMapping(value = "queryUsers.sdo")
+    public
+    @ResponseBody
+    String queryUsers(HttpServletRequest request, HttpServletResponse response, UserEty user) throws Exception {
+        List<UserEty> list = userDao.queryUsers(user);
+        JSONObject retObj = JSONGrid.toJSon(list, list.size(), new SimpleDateFormat("yyyy-MM-dd"));
+        return retObj.toString();
+    }
+
     @RequestMapping(value = "listmainbyself.sdo")
     public
     @ResponseBody

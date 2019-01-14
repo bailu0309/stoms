@@ -9,7 +9,6 @@ import java.util.Map;
  */
 public class ConfigConstants {
 
-    public static final String FJGDM = "HBHLZK";
     public static List<Map<String, Map>> DICTIONARY;
 
     public static String BATCHTIME = "";

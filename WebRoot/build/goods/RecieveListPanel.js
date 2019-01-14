@@ -1,4 +1,4 @@
-Ext.define('build.goods.RecieveGridPanel', {
+Ext.define('build.goods.RecieveListPanel', {
     extend: 'Ext.panel.Panel',
     requires: [
         'Ext.ux.ProgressBarPager',
@@ -17,6 +17,7 @@ Ext.define('build.goods.RecieveGridPanel', {
             border: true,
             defaults: {split: true},
             items: [me.queryPanel, {
+                region: 'center',
                 layout: 'border',
                 items: [this.gridPanel, this.itemsPanel]
             }]
@@ -73,18 +74,18 @@ Ext.define('build.goods.RecieveGridPanel', {
         });
         this.toolBar2 = Ext.create('Ext.toolbar.Toolbar', {
             items: [{
-                text: '新增出货单',
+                text: '新增出库单',
                 iconCls: 'add',
                 scope: this,
                 handler: function () {
                     me.reinfoShowWin.show();
                 }
-            },{
-                text: '新增出货物',
+            }, {
+                text: '新增出库物',
                 iconCls: 'add',
                 scope: this,
                 handler: function () {
-                    me.reinfoShowWin.show();
+                    me.recitemsWin.show();
                 }
             }, {
                 xtype: 'button',
@@ -131,14 +132,14 @@ Ext.define('build.goods.RecieveGridPanel', {
             mask: true,
             region: 'center',
             dockedItems: [this.toolBar2],
-            border: false,
+            border: true,
             columnLines: true,
             reserveScrollbar: true,
             viewConfig: {stripeRows: true},
-            store: this.store,
-            columns: this.columns,
+            store: this.recStore,
+            columns: this.recColumns,
             listeners: {
-                rowdblclick: function (ths, record, element, rowIndex, e, eOpts) {
+                rowclick: function (ths, record, element, rowIndex, e, eOpts) {
                     me.rid = record.get('id');
                     me.searchItems();
                 }
@@ -146,7 +147,7 @@ Ext.define('build.goods.RecieveGridPanel', {
             bbar: {
                 xtype: 'pagingtoolbar',
                 pageSize: 25,
-                store: this.store,
+                store: this.recStore,
                 displayInfo: true,
                 plugins: new Ext.ux.ProgressBarPager()
             }
@@ -171,13 +172,13 @@ Ext.define('build.goods.RecieveGridPanel', {
             region: 'center',
             border: true,
             callBack: function () {
-                me.store.reload();
+                me.recStore.reload();
                 me.reinfoShowWin.hide();
             }
         });
 
         me.reinfoShowWin = Ext.create('Ext.window.Window', {
-            title: '',
+            title: '添加出库单',
             width: 620,
             height: 440,
             autoHeight: true,
@@ -188,12 +189,36 @@ Ext.define('build.goods.RecieveGridPanel', {
             items: [me.reinfoPanel],
             buttonAlign: 'center'
         });
+        me.recitemsPanel = Ext.create('build.goods.RecieveItemsPanel', {
+            width: 600,
+            height: 400,
+            region: 'center',
+            border: true,
+            callBack: function () {
+                me.store.reload();
+                me.recitemsWin.hide();
+            }
+        });
+
+        me.recitemsWin = Ext.create('Ext.window.Window', {
+            title: '添加出库物品',
+            width: 620,
+            height: 440,
+            autoHeight: true,
+            bodyPadding: 5,
+            modal: true,
+            frame: true,
+            closeAction: 'hide',
+            items: [me.recitemsPanel],
+            buttonAlign: 'center'
+        });
 
 
     },
     initStore: function () {
-        this.store = Ext.create('Ext.data.JsonStore', {
+        this.recStore = Ext.create('Ext.data.JsonStore', {
             model: 'Model',
+            autoLoad: true,
             pageSize: 25,
             proxy: {
                 type: 'ajax',
@@ -219,12 +244,12 @@ Ext.define('build.goods.RecieveGridPanel', {
         });
     },
     initColumn: function () {
-        this.columns = [
+        this.recColumns = [
             {text: '领用人', width: 120, dataIndex: 'recname'},
             {text: '领用时间', width: 180, dataIndex: 'rectime'},
-            {text: '出库单号', width: 200, dataIndex: 'outnum'},
+            {text: '出库单号', width: 200, dataIndex: 'outnumber'},
             {text: '审批人', width: 150, dataIndex: 'auditname'},
-            {text: '出库人', width: 150, dataIndex: 'outperson'},
+            {text: '出库人', width: 150, dataIndex: 'outname'},
             {text: '用途', width: 250, dataIndex: 'purpose', cellWrap: true, renderer: breakRenderers},
             {
                 text: '类别', width: 100, dataIndex: 'outtype', dicttype: 'outtype',
@@ -293,13 +318,13 @@ Ext.define('build.goods.RecieveGridPanel', {
     },
     search: function () {
         var me = this;
-        me.store.currentPage = 1;
+        me.recStore.currentPage = 1;
 
         var params = me.queryPanel.getForm().getValues();
 
-        Ext.apply(this.store.proxy.extraParams, params);
+        Ext.apply(this.recStore.proxy.extraParams, params);
 
-        this.store.load();
+        this.recStore.load();
     },
     searchItems: function () {
         var me = this;
@@ -309,7 +334,7 @@ Ext.define('build.goods.RecieveGridPanel', {
 
         Ext.apply(this.itemsstore.proxy.extraParams, params);
 
-        this.store.load();
+        this.itemsstore.load();
     },
     exportData: function () {
         var me = this;

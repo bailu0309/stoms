@@ -268,6 +268,15 @@
 		<if test="depid != null and depid != ''">AND depid= '${depid}'</if>
 
 	</select>
+	<select id="queryUsers" resultType="com.creating.dao.mapper.entity.basic.UserEty"
+	        parameterType="com.creating.dao.mapper.entity.basic.UserEty">
+		SELECT * FROM M_USER t
+		<where>
+			<if test="name !=null">
+				and (t.name like '%${name}%' or t.username like '%${name}%')
+			</if>
+		</where>
+	</select>
 
 	<update id="updateUserStatus">
 		UPDATE M_USER

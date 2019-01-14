@@ -34,37 +34,37 @@
 				and rid = #{rid}
 			</if>
 			<if test="rcode != null">
-				and rcode like '%{rcode}%'
+				and rcode like '%${rcode}%'
 			</if>
 			<if test="rname != null">
-				and rname like '%{rname}%'
+				and rname like '%${rname}%'
 			</if>
 			<if test="wid != null">
 				and wid = #{wid}
 			</if>
 			<if test="wcode != null">
-				and wcode like '%{wcode}%'
+				and wcode like '%${wcode}%'
 			</if>
 			<if test="wname != null">
-				and wname like '%{wname}%'
+				and wname like '%${wname}%'
 			</if>
 			<if test="gid != null">
 				and gid = #{gid}
 			</if>
 			<if test="gcode != null">
-				and gcode like '%{gcode}%'
+				and gcode like '%${gcode}%'
 			</if>
 			<if test="gname != null">
-				and gname like '%{gname}%'
+				and gname like '%${gname}%'
 			</if>
 			<if test="sid != null">
 				and sid = #{sid}
 			</if>
 			<if test="scode != null">
-				and scode like '%{scode}%'
+				and scode like '%${scode}%'
 			</if>
 			<if test="sname != null">
-				and sname like '%{sname}%'
+				and sname like '%${sname}%'
 			</if>
 		</where>
 	</select>
