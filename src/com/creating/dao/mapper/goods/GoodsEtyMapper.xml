@@ -245,9 +245,14 @@
 		GROUP BY
 			type
 	</select>
-	<update id="minusGoods" parameterType="com.creating.dao.mapper.entity.goods.GoodsEty">
+	<update id="minusGoodsAmount" parameterType="com.creating.dao.mapper.entity.goods.GoodsEty">
 		UPDATE t_goods
 		SET amount = (amount - #{amount})
+		WHERE id = #{id}
+	</update>
+	<update id="addGoodsAmount" parameterType="com.creating.dao.mapper.entity.goods.GoodsEty">
+		UPDATE t_goods
+		SET amount = (amount + #{amount})
 		WHERE id = #{id}
 	</update>
 </mapper>

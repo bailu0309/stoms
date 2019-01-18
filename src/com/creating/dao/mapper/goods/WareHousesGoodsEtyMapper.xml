@@ -210,9 +210,15 @@
 			positioncode = #{positioncode,jdbcType=VARCHAR}
 		WHERE id = #{id,jdbcType=INTEGER}
 	</update>
-	<update id="minusWareHouse" parameterType="com.creating.dao.mapper.entity.goods.WareHousesGoodsEty">
+	<update id="minusWareHouseGoodsAmount" parameterType="com.creating.dao.mapper.entity.goods.WareHousesGoodsEty">
 		UPDATE t_warehouses_goods
 		SET amount = (amount - #{amount})
+		WHERE wid = #{wid} AND gid = #{gid}
+	</update>
+
+	<update id="addWareHouseGoodsAmount" parameterType="com.creating.dao.mapper.entity.goods.WareHousesGoodsEty">
+		UPDATE t_warehouses_goods
+		SET amount = (amount + #{amount})
 		WHERE wid = #{wid} AND gid = #{gid}
 	</update>
 </mapper>

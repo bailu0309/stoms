@@ -2,6 +2,7 @@ package com.creating.controller.goods;
 
 import com.creating.controller.basic.BaseController;
 import com.creating.dao.base.BaseEntity;
+import com.creating.dao.mapper.entity.basic.ResultInfo;
 import com.creating.dao.mapper.entity.goods.*;
 import com.creating.service.goods.GoodsService;
 import com.creating.util.json.DateUtils;
@@ -74,7 +75,7 @@ public class GoodsController extends BaseController {
     public
     @ResponseBody
     String queryInstoreItems(BaseEntity baseEntity, InstoreItemsEty itemsEty, HttpServletRequest request) throws Exception {
-        JSONObject retObj = goodsService.queryPageInstoreItems(baseEntity, itemsEty);
+        JSONObject retObj = goodsService.queryInstoreItems(baseEntity, itemsEty);
         return retObj.toString();
     }
 
@@ -148,6 +149,21 @@ public class GoodsController extends BaseController {
     public @ResponseBody
     String saveRecieveItems(HttpServletRequest request, HttpServletResponse response, RecieveItemsEty recieveItems) throws Exception {
         String result = goodsService.saveRecieveItems(request, recieveItems);
+        return result;
+    }
+
+
+    @RequestMapping(value = "saveInstore.sdo", method = RequestMethod.POST)
+    public @ResponseBody
+    String saveRecieveInfo(HttpServletRequest request, HttpServletResponse response, InstoreEty instoreEty) throws Exception {
+        ResultInfo result = goodsService.saveInstore(instoreEty);
+        return result.toString();
+    }
+
+    @RequestMapping(value = "saveInstoreItems.sdo", method = RequestMethod.POST)
+    public @ResponseBody
+    String saveInstoreItems(HttpServletRequest request, HttpServletResponse response, InstoreItemsEty instoreItemsEty) throws Exception {
+        String result = goodsService.saveInstoreItems(instoreItemsEty);
         return result;
     }
 

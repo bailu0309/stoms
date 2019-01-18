@@ -18,7 +18,7 @@ public interface GoodsEtyMapper {
 
     int updateByPrimaryKey(GoodsEty record);
 
-    void minusGoods(GoodsEty goodsEty);
+    void minusGoodsAmount(GoodsEty goodsEty);
 
     List<GoodsEty> queryGoods(GoodsEty goodsEty);
 
@@ -29,5 +29,7 @@ public interface GoodsEtyMapper {
     List<Map> queryGoodsUnits();
 
     List<Map> queryGoodsTypes();
+
+    void addGoodsAmount(GoodsEty goodsEty);
 
 }

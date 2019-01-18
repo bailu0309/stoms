@@ -28,6 +28,9 @@
 			<if test="name != null">
 				and name like '%${name}%'
 			</if>
+			<if test="qv != null and qv != ''">
+				and t.id in (select inid from t_instore_items i where (i.gname like '%${qv}%' or i.gcode like '%${qv}%'))
+			</if>
 			<if test="code != null">
 				and code like '%${code}%'
 			</if>

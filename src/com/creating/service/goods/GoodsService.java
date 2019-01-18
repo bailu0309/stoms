@@ -76,6 +76,11 @@ public class GoodsService {
         return JSONGrid.toJSon(page.getResult(), (int) page.getTotal(), DateUtils.datetimeFormat);
     }
 
+    public JSONObject queryInstoreItems(BaseEntity baseEntity, InstoreItemsEty itemsEty) throws Exception {
+        List<InstoreItemsEty> list = instoreItemsEtyMapper.queryInstoreItems(itemsEty);
+        return JSONGrid.toJSon(list, DateUtils.datetimeFormat);
+
+    }
 
     public JSONObject queryPageWareHouseGoods(BaseEntity baseEntity, WareHousesGoodsEty wareHousesGoodsEty) throws Exception {
         PageHelper.startPage(baseEntity.getPage(), baseEntity.getLimit());
@@ -88,7 +93,7 @@ public class GoodsService {
     }
 
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public String saveRecieveInfo(HttpServletRequest request, RecieveEty recieveInfo) throws IOException {
         ResultInfo info = new ResultInfo();
 
@@ -99,7 +104,7 @@ public class GoodsService {
     }
 
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public String saveWareHouse(WareHousesEty wareHousesEty) throws IOException {
         ResultInfo info = new ResultInfo();
 
@@ -110,59 +115,101 @@ public class GoodsService {
     }
 
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int saveWareHouseGoods(WareHousesGoodsEty wareHousesGoodsEty) throws IOException {
 
         return wareHousesGoodsEtyMapper.insert(wareHousesGoodsEty);
 
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public String saveRecieveItems(HttpServletRequest request, RecieveItemsEty items) throws IOException {
         ResultInfo info = new ResultInfo();
 
-        WareHousesGoodsEty wge = new WareHousesGoodsEty();
-        wge.setWid(items.getWid());
-        wge.setGid(items.getGid());
-        wge.setAmount(items.getAmount());
-        GoodsEty goodsEty = new GoodsEty();
-        goodsEty.setId(items.getGid());
-        goodsEty.setAmount(items.getAmount());
+
         recieveItemsEtyMapper.insert(items);
-//      减少仓库的商品库存
-        wareHousesGoodsEtyMapper.minusWareHouse(wge);
-//      减少整个商品的库存
-        goodsEtyMapper.minusGoods(goodsEty);
+
+
+        this.minusWareHouseGoodsAmount(items.getWid(), items.getGid(), items.getAmount());
+        this.minusGoodsAmount(items.getGid(), items.getAmount());
+
         info.setSuccess(true);
 
         return info.toString();
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int saveSupplier(SuppliersEty ety) {
         suppliersEtyMapper.insert(ety);
         return ety.getId();
     }
 
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public int saveInstore(InstoreEty ety) {
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public ResultInfo saveInstore(InstoreEty ety) {
+        ResultInfo info = new ResultInfo();
+
+        info.setSuccess(true);
+
         instoreEtyMapper.insert(ety);
-        return ety.getId();
+        info.setInfo(ety.getId() + "");
+        return info;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-    public int saveInstoreItems(InstoreItemsEty ety) {
-        return instoreItemsEtyMapper.insert(ety);
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public String saveInstoreItems(InstoreItemsEty ety) {
+
+        instoreItemsEtyMapper.insert(ety);
+        this.addGoodsAmount(ety.getGid(), ety.getAmount());
+        this.addWareHouseGoodsAmount(ety.getWid(), ety.getGid(), ety.getAmount());
+
+        return ResultInfo.ok().toString();
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int saveRecieve(RecieveEty ety) {
         recieveEtyMapper.insert(ety);
         return ety.getId();
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void addGoodsAmount(Integer gid, Float amount) {
+        GoodsEty goodsEty = new GoodsEty();
+        goodsEty.setId(gid);
+        goodsEty.setAmount(amount);
+        goodsEtyMapper.addGoodsAmount(goodsEty);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void addWareHouseGoodsAmount(Integer wid, Integer gid, Float amount) {
+        WareHousesGoodsEty wge = new WareHousesGoodsEty();
+        wge.setWid(wid);
+        wge.setGid(gid);
+        wge.setAmount(amount);
+//      减少仓库的商品库存
+        wareHousesGoodsEtyMapper.addWareHouseGoodsAmount(wge);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void minusWareHouseGoodsAmount(Integer wid, Integer gid, Float amount) {
+        WareHousesGoodsEty wge = new WareHousesGoodsEty();
+        wge.setWid(wid);
+        wge.setGid(gid);
+        wge.setAmount(amount);
+//      减少仓库的商品库存
+        wareHousesGoodsEtyMapper.minusWareHouseGoodsAmount(wge);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void minusGoodsAmount(Integer gid, Float amount) {
+        GoodsEty goodsEty = new GoodsEty();
+        goodsEty.setId(gid);
+        goodsEty.setAmount(amount);
+        goodsEtyMapper.minusGoodsAmount(goodsEty);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int saveRecieveItems(RecieveItemsEty ety) {
         return recieveItemsEtyMapper.insert(ety);
     }
@@ -189,4 +236,5 @@ public class GoodsService {
     public List queryGoodsUnits() {
         return goodsEtyMapper.queryGoodsUnits();
     }
+
 }

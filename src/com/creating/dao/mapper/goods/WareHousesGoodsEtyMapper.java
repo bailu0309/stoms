@@ -17,8 +17,9 @@ public interface WareHousesGoodsEtyMapper {
 
     int updateByPrimaryKey(WareHousesGoodsEty record);
 
-    void minusWareHouse(WareHousesGoodsEty wge);
+    void minusWareHouseGoodsAmount(WareHousesGoodsEty wge);
 
     List<WareHousesGoodsEty> queryWareHouseGoods(WareHousesGoodsEty wareHousesGoodsEty);
 
+    void addWareHouseGoodsAmount(WareHousesGoodsEty wareHousesGoodsEty);
 }

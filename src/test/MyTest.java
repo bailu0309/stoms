@@ -2,6 +2,7 @@ package test;
 
 import com.creating.dao.base.BaseEntity;
 import com.creating.dao.mapper.basic.UserDao;
+import com.creating.dao.mapper.entity.basic.ResultInfo;
 import com.creating.dao.mapper.entity.goods.*;
 import com.creating.dao.mapper.goods.GoodsEtyMapper;
 import com.creating.service.dictionary.DictionaryService;
@@ -123,8 +124,8 @@ public class MyTest {
             ety.setSid(suppliersEty.getId());
             ety.setScode(suppliersEty.getCode());
             ety.setSname(suppliersEty.getName());
-            int id = goodsService.saveInstore(ety);
-
+            ResultInfo s = goodsService.saveInstore(ety);
+            Integer id = Integer.valueOf(s.getInfo());
 
             Random r1 = new Random();
             int v = r1.nextInt(10);

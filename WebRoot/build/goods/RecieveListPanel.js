@@ -195,7 +195,7 @@ Ext.define('build.goods.RecieveListPanel', {
             region: 'center',
             border: true,
             callBack: function () {
-                me.store.reload();
+                me.itemsstore.reload();
                 me.recitemsWin.hide();
             }
         });
@@ -263,7 +263,7 @@ Ext.define('build.goods.RecieveListPanel', {
 
         this.itemscolumns = [
             {text: '仓库', width: 120, dataIndex: 'wname'},
-            {text: '商品名称', width: 180, dataIndex: 'gname'},
+            {text: '物品名称', width: 180, dataIndex: 'gname'},
             {text: '型号', width: 180, dataIndex: 'model'},
             {text: '品牌', width: 180, dataIndex: 'brand'},
             {text: '供应商', width: 200, dataIndex: 'sname'},
