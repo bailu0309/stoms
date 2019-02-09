@@ -41,7 +41,7 @@ Ext.define('build.goods.RecieveItemsPanel', {
                 layout: 'column',
                 bodyStyle: 'padding:5px',
                 defaults: {columnWidth: 1, labelWidth: 70, labelAlign: 'right', width: '95%'},
-                items: [me.fid, me.gid, me.gname, me.gcode]
+                items: [me.fid, me.rid, me.rname, me.rcode, me.gid, me.gname, me.gcode]
             }, {
                 columnWidth: 1,
                 border: false,
@@ -109,13 +109,13 @@ Ext.define('build.goods.RecieveItemsPanel', {
                 actionMethods: {
                     read: 'POST'
                 },
-                url: globalCtx + '/GoodsController/queryAllGoods.sdo',
+                url: globalCtx + '/GoodsController/queryGoodsInStock.sdo',
                 reader: {type: 'json', totalProperty: 'total', rootProperty: 'invdata'}
             }
         });
         this.wareHouseGoodStore = Ext.create('Ext.data.JsonStore', {
             model: 'Model',
-            autoLoad: true,
+            // autoLoad: true,
             proxy: {
                 type: 'ajax',
                 actionMethods: {
@@ -144,6 +144,25 @@ Ext.define('build.goods.RecieveItemsPanel', {
             name: 'id',
             hidden: true
         });
+
+        me.rid = Ext.create('Ext.form.field.Text', {
+            name: 'rid',
+            hidden: true
+        });
+        me.rname = Ext.create('Ext.form.field.Text', {
+            name: 'rname',
+            hidden: true
+        });
+       
+        me.brand = Ext.create('Ext.form.field.Text', {
+            name: 'brand',
+            hidden: true
+        });
+        me.rcode = Ext.create('Ext.form.field.Text', {
+            name: 'rcode',
+            hidden: true
+        });
+
         me.gid = Ext.create('Ext.form.field.ComboBox', {
                 fieldLabel: '物品',
                 name: 'gid',
@@ -180,11 +199,10 @@ Ext.define('build.goods.RecieveItemsPanel', {
             anyMatch: true,
             displayField: 'name',
             valueField: 'id',
-            value: name,
             listeners: {
-                select: function (combo, record, index) {
-                    me.sname.setValue(record.get('name'));
-                    me.scode.setValue(record.get('code'));
+                change: function (thiz, newValue, oldValue, eOpts) {
+                    me.sname.setValue(thiz.rawValue);
+                    // me.scode.setValue(record.get('code'));
                 }
             }
         });
@@ -272,33 +290,29 @@ Ext.define('build.goods.RecieveItemsPanel', {
     save: function () {
         var me = this;
         if (me.formPanel.isValid()) {
-            Ext.MessageBox.confirm('提示', '确认保存？', function (btn) {
-                if (btn != 'yes') {
-                    return;
-                }
-                me.formPanel.getForm().submit({
-                    url: globalCtx + '/GoodsController/saveRecieveItems.sdo',
-                    method: 'POST',
-                    submitEmptyText: false,
-                    waitMsg: '正在保存,请稍候...',
-                    timeout: 60000,
-                    params: {},
-                    success: function (response, options) {
-                        var obj = Ext.util.JSON.decode(options.response.responseText);
-                        if (obj.success == true) {
-                            if (me.callBack) {
-                                me.callBack();
-                            }
-                            App.getApplication().msg('提示', '保存成功！', 2000);
-                        } else {
-                            me.saveBtn.setDisabled(false);
+            me.formPanel.getForm().submit({
+                url: globalCtx + '/GoodsController/saveRecieveItems.sdo',
+                method: 'POST',
+                submitEmptyText: false,
+                waitMsg: '正在保存,请稍候...',
+                timeout: 60000,
+                params: {},
+                success: function (response, options) {
+                    var obj = Ext.util.JSON.decode(options.response.responseText);
+                    if (obj.success == true) {
+                        if (me.callBack) {
+                            me.callBack();
                         }
-                    },
-                    failure: function (response, options) {
-                        Ext.MessageBox.alert('温馨提示', "保存错误！");
+                        me.formPanel.getForm().reset();
+                        App.getApplication().msg('提示', '保存成功！', 2000);
+                    } else {
                         me.saveBtn.setDisabled(false);
                     }
-                });
+                },
+                failure: function (response, options) {
+                    Ext.MessageBox.alert('温馨提示', "保存错误！");
+                    me.saveBtn.setDisabled(false);
+                }
             });
         } else {
             App.getApplication().msg('提示', '红色星号为必填项，请填写完整数据后保存！', 2000);
@@ -350,6 +364,13 @@ Ext.define('build.goods.RecieveItemsPanel', {
         Ext.apply(me.wareHouseGoodStore.proxy.extraParams, params);
 
         this.wareHouseGoodStore.load();
+    },
+    setRecInfo: function (data) {
+        var me = this;
+
+        me.rid.setValue(data['id']);
+        me.rcode.setValue(data['outnumber']);
+        me.rname.setValue(data['name']);
     },
     exception: function () {
         App.getApplication().msg('出错', '后端未正确返回数据', 2000);

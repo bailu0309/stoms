@@ -114,18 +114,18 @@ Ext.define('build.goods.GoodsListPanel', {
             columnLines: true,
             reserveScrollbar: true,
             viewConfig: {stripeRows: true},
-            store: this.store,
+            store: this.goodsstore,
             columns: this.columns,
             listeners: {
-                rowdblclick: function (ths, record, element, rowIndex, e, eOpts) {
-                    me.fid = record.get('fid');
-                    me.type = record.get('type');
+                rowclick: function (ths, record, element, rowIndex, e, eOpts) {
+                    me.gid = record.get('id');
+                    me.searchItems();
                 }
             },
             bbar: {
                 xtype: 'pagingtoolbar',
                 pageSize: 25,
-                store: this.store,
+                store: this.goodsstore,
                 displayInfo: true,
                 plugins: new Ext.ux.ProgressBarPager()
             }
@@ -145,7 +145,7 @@ Ext.define('build.goods.GoodsListPanel', {
 
     },
     initStore: function () {
-        this.store = Ext.create('Ext.data.JsonStore', {
+        this.goodsstore = Ext.create('Ext.data.JsonStore', {
             model: 'Model',
             pageSize: 25,
             proxy: {
@@ -280,13 +280,25 @@ Ext.define('build.goods.GoodsListPanel', {
     },
     search: function () {
         var me = this;
-        me.store.currentPage = 1;
+        me.goodsstore.currentPage = 1;
 
         var params = me.queryPanel.getForm().getValues();
 
-        Ext.apply(this.store.proxy.extraParams, params);
+        Ext.apply(this.goodsstore.proxy.extraParams, params);
 
-        this.store.load();
+        this.goodsstore.load();
+    },
+    searchItems: function () {
+        var me = this;
+        me.itemsstore.currentPage = 1;
+
+        var params = {
+            gid: me.gid
+        };
+
+        Ext.apply(this.itemsstore.proxy.extraParams, params);
+
+        this.itemsstore.load();
     },
     loadData: function (sdate, edate, orgcode, type, qccid) {
         var me = this;

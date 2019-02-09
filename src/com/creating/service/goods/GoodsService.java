@@ -237,4 +237,7 @@ public class GoodsService {
         return goodsEtyMapper.queryGoodsUnits();
     }
 
+    public List queryGoodsInStock(GoodsEty goods) {
+        return goodsEtyMapper.queryGoodsInStock(goods);
+    }
 }

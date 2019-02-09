@@ -85,6 +85,13 @@ Ext.define('build.goods.RecieveListPanel', {
                 iconCls: 'add',
                 scope: this,
                 handler: function () {
+                    var r = me.gridPanel.getSelectionModel().getSelection();
+                    if (r.length === 1) {
+                        me.recitemsPanel.setRecInfo(r[0].data);
+                    } else {
+                        Ext.Msg.alert("提示", "请选择一条出库信息！");
+
+                    }
                     me.recitemsWin.show();
                 }
             }, {

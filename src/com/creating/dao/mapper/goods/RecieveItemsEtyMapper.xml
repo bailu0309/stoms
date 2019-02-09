@@ -28,7 +28,7 @@
 	</select>
 	<select id="queryRecieveItems" resultType="com.creating.dao.mapper.entity.goods.RecieveItemsEty"
 	        parameterType="com.creating.dao.mapper.entity.goods.RecieveItemsEty">
-		select * from t_recieve_items
+		select t.*,g.brand,g.model from t_recieve_items t left join t_goods g on t.gid = g.id
 		<where>
 			<if test="rid != null">
 				and rid = #{rid}

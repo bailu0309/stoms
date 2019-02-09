@@ -245,6 +245,42 @@
 		GROUP BY
 			type
 	</select>
+	<select id="queryGoodsInStock" resultType="com.creating.dao.mapper.entity.goods.GoodsEty">
+		select t.*,concat_ws(" ",name ,  brand ,  model,  sname) text  from t_goods t
+		<where>
+			amount > 0
+			<if test="name != null">
+				and (name like '%${name}%' or brand like '%${name}%' or model like '%${name}%')
+			</if>
+			<if test="code != null">
+				and code like '%${code}%'
+			</if>
+			<if test="brand != null">
+				and brand like '%${brand}%'
+			</if>
+			<if test="model != null">
+				and model like '%${model}%'
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="sid != null">
+				and sid = #{sid}
+			</if>
+			<if test="scode != null">
+				scode like '%${scode}%'
+			</if>
+			<if test="sname != null">
+				sname like '%${sname}%'
+			</if>
+			<if test="sval != null">
+				and amount >= #{sval}
+			</if>
+			<if test="eval != null">
+				and #{eval} >= amount
+			</if>
+		</where>
+	</select>
 	<update id="minusGoodsAmount" parameterType="com.creating.dao.mapper.entity.goods.GoodsEty">
 		UPDATE t_goods
 		SET amount = (amount - #{amount})

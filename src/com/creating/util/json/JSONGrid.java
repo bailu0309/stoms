@@ -40,6 +40,8 @@ public class JSONGrid {
         JSONArray dataArray = new JSONArray();
         JsonConfig config = new JsonConfig();
         config.registerJsonValueProcessor(Date.class, new DateJsonValueProcessor(df));
+        config.registerJsonValueProcessor(float.class, new JsonFloatValueProcessor());
+
         config.registerJsonValueProcessor(Integer.class, new JsonValueProcessor() {
             @Override
             public Object processArrayValue(Object value, JsonConfig arg1) {
@@ -116,6 +118,8 @@ public class JSONGrid {
         JsonConfig config = new JsonConfig();
         config.registerJsonValueProcessor(Date.class, new DateJsonValueProcessor(df));
         config.registerJsonValueProcessor(Timestamp.class, new DateJsonValueProcessor(df));
+        config.registerJsonValueProcessor(float.class, new JsonFloatValueProcessor());
+
         config.registerJsonValueProcessor(Double.class, new JsonValueProcessor() {
             @Override
             public Object processArrayValue(Object value, JsonConfig arg1) {
@@ -159,6 +163,8 @@ public class JSONGrid {
         JsonConfig config = new JsonConfig();
         config.registerJsonValueProcessor(Date.class, new DateJsonValueProcessor(df));
         config.registerJsonValueProcessor(Timestamp.class, new DateJsonValueProcessor(df));
+        config.registerJsonValueProcessor(float.class, new JsonFloatValueProcessor());
+
         config.registerJsonValueProcessor(Double.class, new JsonValueProcessor() {
             @Override
             public Object processArrayValue(Object value, JsonConfig arg1) {
@@ -201,6 +207,8 @@ public class JSONGrid {
         JsonConfig config = new JsonConfig();
         config.registerJsonValueProcessor(Date.class, new DateJsonValueProcessor(df));
         config.registerJsonValueProcessor(Timestamp.class, new DateJsonValueProcessor(df2));
+        config.registerJsonValueProcessor(float.class, new JsonFloatValueProcessor());
+
         config.registerJsonValueProcessor(Double.class, new JsonValueProcessor() {
             @Override
             public Object processArrayValue(Object value, JsonConfig arg1) {
@@ -240,6 +248,8 @@ public class JSONGrid {
         JSONObject dataObj = new JSONObject();
         JsonConfig config = new JsonConfig();
         config.registerJsonValueProcessor(Date.class, new DateJsonValueProcessor(df));
+        config.registerJsonValueProcessor(float.class, new JsonFloatValueProcessor());
+
         dataObj.put("data", JSONObject.fromObject(data, config));
         dataObj.put("success", true);
         return dataObj;

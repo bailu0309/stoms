@@ -30,7 +30,7 @@ public class GoodsEty extends BaseEntity {
     private String text;
 
     public String getText() {
-        return this.name + " " + this.brand + " " + this.model;
+        return this.text;
     }
 
     public void setText(String text) {

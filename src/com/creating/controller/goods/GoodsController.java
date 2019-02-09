@@ -44,6 +44,14 @@ public class GoodsController extends BaseController {
         return jsonObject.toString();
     }
 
+    @RequestMapping("queryGoodsInStock.sdo")
+    public
+    @ResponseBody
+    String queryGoodsInStock(BaseEntity baseEntity, GoodsEty goods, HttpServletRequest request) throws Exception {
+        List ls = goodsService.queryGoodsInStock(goods);
+        JSONObject jsonObject = JSONGrid.toJSon(ls);
+        return jsonObject.toString();
+    }
 
     @RequestMapping("queryRecieveInfo.sdo")
     public

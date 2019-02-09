@@ -32,4 +32,5 @@ public interface GoodsEtyMapper {
 
     void addGoodsAmount(GoodsEty goodsEty);
 
+    List queryGoodsInStock(GoodsEty goods);
 }
